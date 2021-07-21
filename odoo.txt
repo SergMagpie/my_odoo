@@ -1,0 +1,55 @@
+Добавление вычисляемых полей в модель
+
+Иногда нам нужно иметь поле, значение которого вычислено или получено из других полей. в той же записи или в связанных записях. Типичный пример - общая сумма, которая рассчитывается путем умножения цены за единицу на количество. В моделях Odoo этого можно добиться с использованием вычисляемых полей.
+Чтобы показать вам, как работают вычисляемые поля, мы добавим одно в модель Библиотечной книги. для подсчета дней, прошедших с даты выхода книги.
+Также можно сделать вычисляемые поля доступными для редактирования и поиска. Мы реализуем это к нашему примеру.
+
+Готовиться
+Мы продолжим использовать дополнительный модуль my_library из предыдущего рецепта.
+
+Как это сделать...
+Мы отредактируем файл кода models/library_book.py, чтобы добавить новое поле и методы, поддерживающие его логику:
+
+1. Начните с добавления нового поля в модель Library Books:
+class LibraryBook(models.Model):
+	# ...
+	age_days = fields.Float(
+		string='Days Since Release',
+		compute='_compute_age',
+		inverse='_inverse_age',
+		search='_search_age',
+		store=False,	# optional
+		compute_sudo=True # optional
+	)
+
+2. Затем добавьте метод с логикой вычисления значения:
+
+# ...
+from odoo import api # if not already imported
+# ...
+class LibraryBook(models.Model):
+	# ...
+	@api.depends('date_release')
+	def _compute_age(self):
+		today = fields.Date.today()
+		for book in self:
+			if book.date_release:
+				delta = today - book.date_release
+				book.age_days = delta.days
+			else:
+				book.age_days = 0
+
+3. Чтобы добавить метод и реализовать логику записи в вычисляемом поле, используйте следующий код:
+
+from datetime import timedelta
+# ...
+class LibraryBook(models.Model):
+	# ...
+	def _inverse_age(self):
+		today = fields.Date.today()
+		for book in self.filtered('date_release'):
+			d = today - timedelta(days=book.age_days)
+			book.date_release = d
+
+4. Чтобы реализовать логику, которая позволит вам искать в вычисляемом поле, используйте следующий код:
+
