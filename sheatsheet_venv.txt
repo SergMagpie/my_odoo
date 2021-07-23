@@ -1,0 +1,18 @@
+c:\>python -m venv c:\path\to\myenv - for windows
+python3 -m venv /path/to/new/virtual/environment - for linux
+
+<DIR>\Scripts\activate
+
+py -m pip install "SomeProject"
+py -m pip install --upgrade SomeProject
+py -m pip install --user SomeProject
+py -m pip install -r requirements.txt
+
+py -m pip freeze > requirements.txt
+py -m pip install -r requirements.txt
+
+py -m pip uninstall SomePackage
+
+py -m pip list
+
+py -m pip list --outdated

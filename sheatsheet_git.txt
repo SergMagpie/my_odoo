@@ -1,0 +1,52 @@
+git help <команда> - допомога по git
+git <команда> --help - допомога по git
+man git-<команда> - допомога по git
+git config --global user.name "SergMagpie"
+git config --global user.email sergmagpie@gmail.com
+git config --list - перевірка всіх налаштувань
+git init - ініціалізація поточної директорії як нового репозиторію git
+git status - перевірка репозиторію (локально)
+git diff - перевірка репозиторію більш детальна (локально)
+git log перегляд останніх комітів (локально)
+git add --all - оновити репозиторій (локально)
+git commit -m 'initial project version' - додати коміт до репозиторію (локально, після оновлення)
+git commit -a -m 'initial project version' - додати коміт до репозиторію (локально, без необхідності команди git add)
+git clone git://github.com/SergMagpie/itstep.git - клонувати з github на комп репозиторій
+gitk - запуск вбудованого графічного інструенту для візуалізації історії комітів
+
+
+
+
+eval "$(ssh-agent)" - запуск ssh агента
+ssh-keygen - створення ssh ключа
+ssh-add keyname - додавання ключа keyname
+
+git init Позволяет проинициализировать репозиторий в текущей папке
+git status Показывает текущий статус
+git add Отслеживает изменения файлов
+git add index.html? — добавляет index.html
+git add .? — добавляет все файлы
+git commit Сохраняет изменения в коммит
+git commit -m 'commit message'? — создает коммит с сообщением
+git branch Работа с ветками в репозитории
+git branch? — показывает список веток
+git branch branch-name? — создает новую ветку branch-name
+git branch -D branch-name? — удаляет ветку branch-name
+git checkout Переключается на другую ветку
+git checkout branch-name? — переключается на последний коммит в ветке
+branch-name git checkout -b branch-name? — создает и переключается на ветку branch-name
+git merge Совмещает текущую ветку с выбранной
+git merge branch-name? — совмещает текущую ветку с branch-name
+git config Конфигурация и параметры git
+git config --global user.name? — Показывает имя пользователя
+git config --global user.name 'new user'? — Изменяет имя пользователя
+git config --global user.email? — Показывает email пользователя
+git config --global user.email 'test@mail.ru'? — Изменяет email пользователя
+git push Заливает текущие локальные коммиты в удаленный репозиторий
+git pull Забирает изменения с удаленного репозитория в локальный
+git clone Клонирует проект с удаленного репозитория
+
+(Если вы умеете работать с Git и собираетесь делать всё локально, 
+то при создании репозитория советую выбрать "Initialize this repository with a README" 
+— в таком случае репозиторий сразу создастся непустым, и его можно будет клонировать. 
+В противном случае нужно будет инициализировать репозиторий локально и добавить удалённый репозиторий).
