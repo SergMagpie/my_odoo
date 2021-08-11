@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--            view for movie show-->
+        <record id="cinema.movie_show_view_form" model="ir.ui.view">
+            <field name="name">Movie show Form</field>
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button"
+                                    name="%(cinema.ticket_window)d"
+                                    type="action"
+                                    icon="fa-ticket"
+                                    context="{'search_default_cinema_movie_show_id': active_id}">
+                                <field string="Remaining seats" name="remaining_seats" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="number"/>
+                                <field name="cinema_hall_id"/>
+                                <field name="movie_id"/>
+                            </group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_stop"/>
+                                <field name="genre_id"/>
+                                <field name="rating" widget="priority"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!--        searches and group for movie show-->
+        <record id="cinema.search_movie_show" model="ir.ui.view">
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="cinema_hall_id" widget="many2one" string="cinema hall"/>
+                    <field name="date_start" string="date start"/>
+                    <field name="movie_id" widget="many2one" string="movie"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Genre" name="genre_id"
+                                context="{'group_by':'genre_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Rating" name="rating"
+                                context="{'group_by':'rating'}"/>
+                    </group>
+                    <filter string="Order Date" name="order_the_date" date="date_start"/>
+                    <filter string="Expire This Week" name="expire_this_week"
+
+                            domain="['&amp;',('date_start', '&gt;=',
+                        (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                        ('date_start', '&lt;=',
+                        (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d'))]"/>
+
+                    <filter string="Later" name="later"
+
+                            domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d')) ]"/>
+
+                    <filter string="Rating" name="rating" domain='[["rating","=","4"]]'/>
+
+                </search>
+            </field>
+        </record>
+        <!--        searches and group for tickets-->
+        <record id="cinema.search_ticket" model="ir.ui.view">
+            <field name="model">cinema.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="number" string="number"/>
+                    <field name="visitor_id" widget="many2one" string="visitor"/>
+                    <field name="cinema_movie_show_id" widget="many2one" string="movie show"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="movie show" name="cinema_movie_show_id"
+                                context="{'group_by':'visitor_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="movie show" name="cinema_movie_show_id"
+                                context="{'group_by':'cinema_movie_show_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="date start" name="date_start"
+                                context="{'group_by':'date_start'}"/>
+                    </group>
+                    <filter string="Visitor" name="visitor_id"/>
+                    <filter string="Order Date" name="order_the_date" date="date_start"/>
+                    <filter string="Expire This Week" name="expire_this_week"
+
+                            domain="['&amp;',('date_start', '&gt;=',
+                        (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                        ('date_start', '&lt;=',
+                        (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d'))]"/>
+
+                    <filter string="Later" name="later"
+
+                            domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d')) ]"/>
+
+                </search>
+            </field>
+        </record>
+        <!--        searches and group for movie-->
+        <record id="cinema.search_all_movies" model="ir.ui.view">
+            <field name="model">cinema.movie</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="genre_id" widget="many2one" string="genre"/>
+                    <field name="director_id" widget="many2one" string="director"/>
+                    <field name="actors_ids" string="actors"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Genre" name="genre_id"
+                                context="{'group_by':'genre_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Rating" name="rating"
+                                context="{'group_by':'rating'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--        kanban for movie-->
+        <record id="cinema.movie_view_kanban" model="ir.ui.view">
+            <field name="name">Movie kanban</field>
+            <field name="model">cinema.movie</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="genre_id"/>
+                    <field name="release_date"/>
+                    <field name="director_id"/>
+                    <field name="actors_ids"/>
+                    <field name="rating"/>
+                    <field name="poster"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                Movie:
+                                <field name="name"/>
+                                <br/>
+                                Genre:
+                                <field name="genre_id"/>
+                                <br/>
+                                Release date:
+                                <field name="release_date"/>
+                                <br/>
+                                Director:
+                                <field name="director_id"/>
+                                <br/>
+                                Actors:
+                                <field name="actors_ids" widget="many2many_tags"/>
+                                <br/>
+                                Rating:
+                                <field name="rating" widget="priority"/>
+                                <br/>
+                                <field name="poster" widget="image"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!--        kanban for ticket-->
+        <record id="cinema.ticket_view_kanban" model="ir.ui.view">
+            <field name="name">Ticket kanban</field>
+            <field name="model">cinema.ticket</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="number"/>
+                    <field name="visitor_id"/>
+                    <field name="cinema_movie_show_id"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                Ticket number:
+                                <field name="number"/>
+                                <br/>
+                                Visitor's name:
+                                <field name="visitor_id"/>
+                                <br/>
+                                Movie show:
+                                <field name="cinema_movie_show_id"/>
+                                <br/>
+                                date_start:
+                                <field name="date_start"/>
+                                <br/>
+                                date_stop:
+                                <field name="date_stop"/>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!--        kanban for movie show-->
+        <record id="cinema.movie_show_view_kanban" model="ir.ui.view">
+            <field name="name">Movie show kanban</field>
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="number"/>
+                    <field name="cinema_hall_id"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <field name="movie_id"/>
+                    <field name="genre_id"/>
+                    <field name="rating"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                Number:
+                                <field name="number"/>
+                                <br/>
+                                Cinema hall:
+                                <field name="cinema_hall_id"/>
+                                <br/>
+                                date_start:
+                                <field name="date_start"/>
+                                <br/>
+                                date_stop:
+                                <field name="date_stop"/>
+                                <br/>
+                                Movie:
+                                <field name="movie_id"/>
+                                <br/>
+                                Genre:
+                                <field name="genre_id"/>
+                                <br/>
+                                Rating:
+                                <field name="rating" widget="priority"/>
+                                <br/>
+                                Remaining seats:
+                                <field name="remaining_seats"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!--        form for movie-->
+        <record id="cinema.movie_view_form" model="ir.ui.view">
+            <field name="name">Cinema movie form</field>
+            <field name="model">cinema.movie</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="genre_id"/>
+                        <field name="release_date"/>
+                        <field name="director_id"/>
+                        <field name="actors_ids" widget="many2many_tags"/>
+                        <field name="rating" widget="priority"/>
+                        <field name="poster" widget="image"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <!--        calendar for ticket -->
+        <record id="cinema.ticket_calendar" model="ir.ui.view">
+            <field name="model">cinema.ticket</field>
+            <field name="arch" type="xml">
+                <calendar
+                        date_start="date_start"
+                        date_stop="date_stop"
+                >
+                    <field name="number"/>
+                    <field name="visitor_id"/>
+                    <field name="cinema_movie_show_id"/>
+                </calendar>
+            </field>
+        </record>
+        <!--        calendar for movie show-->
+        <record id="cinema.movie_show_calendar" model="ir.ui.view">
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <calendar date_start="date_start" date_stop="date_stop">
+                    <field name="number"/>
+                    <field name="cinema_hall_id"/>
+                    <field name="movie_id"/>
+                </calendar>
+            </field>
+        </record>
+        <!--        tree ticket-->
+        <record id="cinema.ticket_tree" model="ir.ui.view">
+            <field name="name">Cinema ticket tree</field>
+            <field name="model">cinema.ticket</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="number"/>
+                    <field name="visitor_id"/>
+                    <field name="cinema_movie_show_id"/>
+                </tree>
+            </field>
+        </record>
+        <!--        tree movie show-->
+        <record id="cinema.movie_show_tree" model="ir.ui.view">
+            <field name="name">Cinema movie show tree</field>
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="number"/>
+                    <field name="cinema_hall_id"/>
+                    <field name="date_start"/>
+                    <field name="movie_id"/>
+                </tree>
+            </field>
+        </record>
+        <!--        tree cinema hall-->
+        <record id="cinema.cinema_hall_tree" model="ir.ui.view">
+            <field name="name">Cinema hall tree</field>
+            <field name="model">cinema.hall</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="cinema_id"/>
+                    <field name="name" string="hall"/>
+                </tree>
+            </field>
+        </record>
+        <!--        tree genre-->
+        <record id="cinema.genre_tree" model="ir.ui.view">
+            <field name="name">Genre tree</field>
+            <field name="model">cinema.genre</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <!-- server action to the one above -->
+        <!--            i. Ticket (kanban, tree, form, calendar, graph, pivot)-->
+        <record id="cinema.ticket_window" model="ir.actions.act_window">
+            <field name="name">Ticket</field>
+            <field name="res_model">cinema.ticket</field>
+            <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+        </record>
+        <!--            ii. Film (kanban, tree, form)-->
+        <record id="cinema.movie_window" model="ir.actions.act_window">
+            <field name="name">Film</field>
+            <field name="res_model">cinema.movie</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        <!--            iii. Genre (tree)-->
+        <record id="cinema.genre_window" model="ir.actions.act_window">
+            <field name="name">Genre</field>
+            <field name="res_model">cinema.genre</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <!--            iv. Session (kanban, tree, form calendar, graph, pivot)-->
+        <record id="cinema.movie_show_window" model="ir.actions.act_window">
+            <field name="name">Session</field>
+            <field name="res_model">cinema.movie_show</field>
+            <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+        </record>
+        <!--            v. Hall (tree, form)-->
+        <record id="cinema.cinema_hall_window" model="ir.actions.act_window">
+            <field name="name">Hall</field>
+            <field name="res_model">cinema.hall</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--Theater-->
+        <record id="cinema.cinema_theatre_window" model="ir.actions.act_window">
+            <field name="name">Cinema theatre</field>
+            <field name="res_model">cinema.cinema</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- Top menu item -->
+
+        <menuitem name="Cinema" id="cinema_base_menu"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Cinema theatre" id="cinema.cinema_theatre" parent="cinema_base_menu"
+                  action="cinema.cinema_theatre_window"/>
+        <menuitem name="Cinema hall" id="cinema.cinema_hall" parent="cinema_base_menu"
+                  action="cinema.cinema_hall_window"/>
+        <menuitem name="Genre" id="cinema.genre" parent="cinema_base_menu" action="cinema.genre_window"/>
+        <menuitem name="Movie" id="cinema.movie" parent="cinema_base_menu" action="cinema.movie_window"/>
+        <menuitem name="Movie show" id="cinema.movie_show" parent="cinema_base_menu" action="cinema.movie_show_window"/>
+        <menuitem name="Ticket" id="cinema.ticket" parent="cinema_base_menu" action="cinema.ticket_window"/>
+
+
+    </data>
+</odoo>

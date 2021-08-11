@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="cinema_smart_button" model="ir.ui.view">
+            <field name="name">cinema.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button"
+                            name="%(cinema.ticket_window)d"
+                            type="action"
+                            icon="fa-ticket"
+                    context="{'search_default_visitor_id': active_id}"
+                    >
+                        <field string="Tickets" name="tickets_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

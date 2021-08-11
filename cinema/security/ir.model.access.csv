@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cinema_cinema,cinema.cinema,model_cinema_cinema,"",1,1,1,1
+access_cinema_movie,cinema.movie,model_cinema_movie,"",1,1,1,1
+access_cinema_genre,cinema.genre,model_cinema_genre,"",1,1,1,1
+access_cinema_hall,cinema.hall,model_cinema_hall,"",1,1,1,1
+access_cinema_movie_show,cinema.movie_show,model_cinema_movie_show,"",1,1,1,1
+access_cinema_ticket,cinema.ticket,model_cinema_ticket,"",1,1,1,1
