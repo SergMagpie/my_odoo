@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        tree place category-->
+        <record id="cinema.place_category_tree" model="ir.ui.view">
+            <field name="name">Place category tree</field>
+            <field name="model">cinema.place_category</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        tree amount places-->
+        <record id="cinema.amount_places_tree" model="ir.ui.view">
+            <field name="name">Amount places tree</field>
+            <field name="model">cinema.amount_places</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="amount"/>
+                    <field name="place_category_id"/>
+                    <field name="cinema_hall_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <act_window id="cinema_amount_places_action"
+                    name="Amount places"
+                    res_model="cinema.amount_places"
+                    view_mode="tree,form"
+                    target="current"/>
+
+        <menuitem name="Amount places"
+                  id="cinema.amount_places"
+                  parent="cinema_base_menu"
+                  action="cinema_amount_places_action"
+                  sequence="20"/>
+
+        <act_window id="cinema_place_category_action"
+                    name="Place category"
+                    res_model="cinema.place_category"
+                    view_mode="tree"
+                    target="new"/>
+
+        <menuitem name="Place category"
+                  id="cinema.place_category"
+                  parent="cinema_base_menu"
+                  action="cinema_place_category_action"
+                  sequence="20"/>
+
+
+    </data>
+</odoo>

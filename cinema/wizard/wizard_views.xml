@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='cinema_wizard_form' model='ir.ui.view'>
+            <field name='name'>Cinema wizard form view</field>
+            <field name='model'>cinema.wizard</field>
+            <field name='arch' type='xml'>
+                <form string="Buy tickets">
+                    Name of visitor:
+                    <field name="visitor_id"/>
+                    <br/>
+                    Name of movie show:
+                    <field name="movie_show_id"/>
+                    <br/>
+                    Amount:
+                    <field name="amount" widget="integer"/>
+                    <footer>
+                        <button name="buy_tickets" type="object" string="Buy" class="btn-primary"/>
+                        <!--                        <button name="action_skip" type="object" special="cancel" string="Cancel" class="btn-secondary"/>-->
+                        <button string='Cancel' class='btn-default' special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window id="cinema_wizard_action"
+                    name="Buy tickets"
+                    res_model="cinema.wizard"
+                    view_mode="form"
+                    target="new"/>
+
+        <menuitem name="Buying tickets"
+                  id="cinema.wizard"
+                  parent="cinema_base_menu"
+                  action="cinema_wizard_action"
+                  sequence="20"/>
+    </data>
+</odoo>

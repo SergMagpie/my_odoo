@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "cinema",
+    'name': "Cinema",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        The best cinema manager""",
 
     'description': """
         Long description of module's purpose
@@ -20,15 +19,19 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'mail'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/searches_and_groups.xml',
+        'views/kanbans.xml',
         'views/views.xml',
         'views/templates.xml',
         'data/ir_sequence.xml',
-        'views/inheriting_views.xml'
+        'views/inheriting_views.xml',
+        'wizard/wizard_views.xml',
+        'views/place_category.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

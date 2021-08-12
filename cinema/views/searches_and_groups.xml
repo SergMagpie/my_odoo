@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--        searches and group for movie show-->
+        <record id="cinema.search_movie_show" model="ir.ui.view">
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="cinema_hall_id" widget="many2one" string="cinema hall"/>
+                    <field name="date_start" string="date start"/>
+                    <field name="movie_id" widget="many2one" string="movie"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Genre" name="genre_id"
+                                context="{'group_by':'genre_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Rating" name="rating"
+                                context="{'group_by':'rating'}"/>
+                    </group>
+                    <filter string="Order Date" name="order_the_date" date="date_start"/>
+                    <filter string="Expire This Week" name="expire_this_week"
+
+                            domain="['&amp;',('date_start', '&gt;=',
+                        (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                        ('date_start', '&lt;=',
+                        (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d'))]"/>
+
+                    <filter string="Later" name="later"
+
+                            domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d')) ]"/>
+
+                    <filter string="Rating" name="rating" domain='[["rating","=","4"]]'/>
+
+                </search>
+            </field>
+        </record>
+        <!--        searches and group for tickets-->
+        <record id="cinema.search_ticket" model="ir.ui.view">
+            <field name="model">cinema.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="number" string="number"/>
+                    <field name="visitor_id" widget="many2one" string="visitor"/>
+                    <field name="cinema_movie_show_id" widget="many2one" string="movie show"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="movie show" name="cinema_movie_show_id"
+                                context="{'group_by':'visitor_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="movie show" name="cinema_movie_show_id"
+                                context="{'group_by':'cinema_movie_show_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="date start" name="date_start"
+                                context="{'group_by':'date_start'}"/>
+                    </group>
+                    <filter string="Visitor" name="visitor_id"/>
+                    <filter string="Order Date" name="order_the_date" date="date_start"/>
+                    <filter string="Expire This Week" name="expire_this_week"
+
+                            domain="['&amp;',('date_start', '&gt;=',
+                        (context_today() + relativedelta(weeks=-1,days=1,weekday=0)).strftime('%Y-%m-%d')),
+                        ('date_start', '&lt;=',
+                        (context_today() + relativedelta(weekday=6)).strftime('%Y-%m-%d'))]"/>
+
+                    <filter string="Later" name="later"
+
+                            domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d')) ]"/>
+
+                </search>
+            </field>
+        </record>
+        <!--        searches and group for movie-->
+        <record id="cinema.search_all_movies" model="ir.ui.view">
+            <field name="model">cinema.movie</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="genre_id" widget="many2one" string="genre"/>
+                    <field name="director_id" widget="many2one" string="director"/>
+                    <field name="actors_ids" string="actors"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Genre" name="genre_id"
+                                context="{'group_by':'genre_id'}"/>
+                    </group>
+                    <group expand="0" string="Group By">
+                        <filter string="Rating" name="rating"
+                                context="{'group_by':'rating'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

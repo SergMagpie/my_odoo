@@ -6,6 +6,7 @@ from odoo import models, fields, api
 class Movie(models.Model):
     _name = 'cinema.movie'
     _description = 'cinema.movie'
+    _inherit = ['mail.thread']
 
     name = fields.Char(required=True, default="Any movie")
     genre_id = fields.Many2one('cinema.genre', string='Genre')
@@ -19,3 +20,10 @@ class Movie(models.Model):
         ('3', 'High'),
         ('4', 'Very High')])
     poster = fields.Image()
+
+    movie_show_ids = fields.One2many(
+        'cinema.movie_show',
+        'movie_id',
+        string='Movie show form',
+        # context={'search_default_cinema_movie_id': 'active_id'}
+    )

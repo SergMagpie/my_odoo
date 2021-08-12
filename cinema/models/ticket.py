@@ -26,7 +26,7 @@ class Ticket(models.Model):
         ('name_uniq', 'UNIQUE (number)',
          'Number must be unique.')
     ]
-
+# todo refactor this function for use in amount places
     @api.model
     def create(self, vals):
         if vals.get('number', 'New') == 'New':
@@ -50,7 +50,7 @@ class Ticket(models.Model):
         return result
 
 
-class Search(models.Model):
+class SearchFromPartner(models.Model):
     _inherit = 'res.partner'
     tickets_count = fields.Integer(
         string='Tickets',
