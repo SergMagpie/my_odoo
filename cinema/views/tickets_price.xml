@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        tree tickets_price-->
+        <record id="cinema.tickets_price_tree" model="ir.ui.view">
+            <field name="name">Tickets price tree</field>
+            <field name="model">cinema.tickets_price</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="cinema_movie_show_id"/>
+                    <field name="place_category_id"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+        <!--        searches and group for tree tickets_price-->
+        <record id="cinema.search_amount_places" model="ir.ui.view">
+            <field name="model">cinema.tickets_price</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="cinema_movie_show_id" widget="many2one" string="Cinema movie show"/>
+                    <field name="place_category_id" widget="many2one" string="Place category"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Cinema movie show" name="cinema_movie_show_id"
+                                context="{'group_by':'cinema_movie_show_id'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+
+        <act_window id="cinema_tickets_price_action"
+                    name="Tickets price"
+                    res_model="cinema.tickets_price"
+                    view_mode="tree"
+                    target="new"/>
+
+        <menuitem name="Tickets price"
+                  id="cinema.tickets_price"
+                  parent="cinema_base_menu"
+                  action="cinema_tickets_price_action"
+                  sequence="20"/>
+
+
+    </data>
+</odoo>

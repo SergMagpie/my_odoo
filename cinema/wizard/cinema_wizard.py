@@ -5,6 +5,8 @@ from odoo import models, fields, api
 
 class CinemaWizard(models.TransientModel):
     _name = 'cinema.wizard'
+    currency_id = fields.Many2one(
+        'res.currency', string='Currency')
 
     def _get_default_visitor(self):
         return self.env.uid
@@ -29,6 +31,22 @@ class CinemaWizard(models.TransientModel):
         default=1,
         required=True
     )
+    place_category_id = fields.Many2one('cinema.place_category',
+                                        string='Place category',
+                                        required=True)
+    price = fields.Monetary(
+        'Ticket price',
+        compute='_compute_ticket_price',
+        readonly=True,
+    )
+
+    @api.depends('movie_show_id', 'amount', 'place_category_id')
+    def _compute_ticket_price(self):
+        for record in self:
+            price = self.env['cinema.tickets_price'].search(
+                [('cinema_movie_show_id', '=', record.movie_show_id.id),
+                 ('place_category_id', '=', record.place_category_id.id)]).price
+            record.price = price * record.amount
 
     # todo add category of places
 
@@ -39,6 +57,7 @@ class CinemaWizard(models.TransientModel):
                 {
                     'visitor_id': self.visitor_id.id,
                     'cinema_movie_show_id': self.movie_show_id.id,
+                    'place_category_id': self.place_category_id.id,
                     'number': 'New'
                 }
                 for _ in range(self.amount)

@@ -32,6 +32,7 @@
         'views/inheriting_views.xml',
         'wizard/wizard_views.xml',
         'views/place_category.xml',
+        'views/tickets_price.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

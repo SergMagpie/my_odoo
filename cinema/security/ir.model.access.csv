@@ -8,3 +8,4 @@ access_cinema_ticket,cinema.ticket,model_cinema_ticket,"",1,1,1,1
 access_cinema_wizard,cinema.wizard,model_cinema_wizard,,1,1,1,1
 access_cinema_place_category,cinema.place_category,model_cinema_place_category,,1,1,1,1
 access_cinema_amount_places,cinema.amount_places,model_cinema_amount_places,,1,1,1,1
+access_cinema_tickets_price,cinema.tickets_price,model_cinema_tickets_price,,1,1,1,1

@@ -31,10 +31,13 @@
                             </group>
                         </group>
                         <group>
+                            <field name="place_category_ids"/>
+                        </group>
+                        <group>
                             <button type="action"
                                     name="%(cinema_wizard_action)d"
                                     string="Buy tickets"
-                                    attrs="{'invisible': [('remaining_seats', '=', 0)]}"
+                                    attrs="{'invisible': [('remaining_seats', '&lt;=', 0)]}"
                             />
                         </group>
                     </sheet>
@@ -114,6 +117,7 @@
                     <field name="number"/>
                     <field name="visitor_id"/>
                     <field name="cinema_movie_show_id"/>
+                    <field name="place_category_id"/>
                 </tree>
             </field>
         </record>

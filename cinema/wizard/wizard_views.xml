@@ -12,8 +12,14 @@
                     Name of movie show:
                     <field name="movie_show_id"/>
                     <br/>
+                    Place category:
+                    <field name="place_category_id"/>
+                    <br/>
                     Amount:
                     <field name="amount" widget="integer"/>
+                    <br/>
+                    Price:
+                    <field name="price"/>
                     <footer>
                         <button name="buy_tickets" type="object" string="Buy" class="btn-primary"/>
                         <!--                        <button name="action_skip" type="object" special="cancel" string="Cancel" class="btn-secondary"/>-->

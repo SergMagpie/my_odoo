@@ -7,9 +7,21 @@ class Ticket(models.Model):
     _name = 'cinema.ticket'
     _description = 'cinema.ticket'
 
-    number = fields.Char(string="Ticket's number", readonly=True, required=True, copy=False, default='New')
+    currency_id = fields.Many2one(
+        'res.currency', string='Currency')
+
+    number = fields.Char(string="Ticket's number",
+                         readonly=True,
+                         required=True,
+                         copy=False,
+                         default='New')
     visitor_id = fields.Many2one('res.partner')
-    cinema_movie_show_id = fields.Many2one('cinema.movie_show', string='Cinema movie show', required=True)
+    cinema_movie_show_id = fields.Many2one('cinema.movie_show',
+                                           string='Cinema movie show',
+                                           required=True)
+    place_category_id = fields.Many2one('cinema.place_category',
+                                        string='Place category',
+                                        required=True)
 
     date_start = fields.Datetime(
         'Date start',
@@ -22,20 +34,45 @@ class Ticket(models.Model):
         readonly=True
     )
 
+    price = fields.Monetary(
+        'Ticket price',
+        compute='_compute_ticket_price',
+        readonly=True,
+    )
+
+    @api.depends('cinema_movie_show_id', 'place_category_id')
+    def _compute_ticket_price(self):
+        for record in self:
+            price = self.env['cinema.tickets_price'].search(
+                [('cinema_movie_show_id', '=', record.cinema_movie_show_id.id),
+                 ('place_category_id', '=', record.place_category_id.id)]).price
+            record.price = price
+
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (number)',
          'Number must be unique.')
     ]
-# todo refactor this function for use in amount places
+
+    # todo refactor this function for use in amount places
     @api.model
     def create(self, vals):
         if vals.get('number', 'New') == 'New':
             vals['number'] = self.env['ir.sequence'].next_by_code(
                 'cinema.ticket') or 'New'
         result = super(Ticket, self).create(vals)
-        if result.cinema_movie_show_id.cinema_hall_id.number_of_seats < self.search_count(
-                [('cinema_movie_show_id', '=', result.cinema_movie_show_id.id)]):
+
+        amount_tickets = self.search_count(
+            [('place_category_id', '=', result.place_category_id.id)]
+        )
+        amount_seats = sum(self.env['cinema.amount_places'].search(
+            [('place_category_id', '=', result.place_category_id.id),
+             ('cinema_hall_id', '=', result.cinema_movie_show_id.cinema_hall_id.id)]
+        ).mapped('amount')
+        )
+
+        if amount_seats < amount_tickets:
             raise UserError('The hall is full')
+
         return result
 
     def name_get(self):

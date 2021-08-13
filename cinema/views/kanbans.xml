@@ -70,7 +70,12 @@
                                 <br/>
                                 date_stop:
                                 <field name="date_stop"/>
-
+                                <br/>
+                                place_category:
+                                <field name="place_category_id"/>
+                                <br/>
+                                Price:
+                                <field name="price"/>
                             </div>
                         </t>
                     </templates>
@@ -79,26 +84,25 @@
         </record>
 
 
-
         <record id="wizard_form_minimal"
-model="ir.ui.view">
-<field name="name">wizard form minimal</field>
-<field name="model">cinema.movie_show</field>
-<field name="arch" type="xml">
-<form>
-<group>
-<field name="number"/>
-<field name="cinema_hall_id"/>
-<field name="date_start"/>
-<field name="date_stop"/>
-<field name="movie_id"/>
-<field name="genre_id"/>
-<field name="movie_id"/>
-<field name="rating"/>
-</group>
-</form>
-</field>
-</record>
+                model="ir.ui.view">
+            <field name="name">wizard form minimal</field>
+            <field name="model">cinema.movie_show</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="number"/>
+                        <field name="cinema_hall_id"/>
+                        <field name="date_start"/>
+                        <field name="date_stop"/>
+                        <field name="movie_id"/>
+                        <field name="genre_id"/>
+                        <field name="movie_id"/>
+                        <field name="rating"/>
+                    </group>
+                </form>
+            </field>
+        </record>
         <!--        kanban for movie show-->
         <record id="cinema.movie_show_view_kanban" model="ir.ui.view">
             <field name="name">Movie show kanban</field>
@@ -143,8 +147,9 @@ model="ir.ui.view">
                                         name="%(cinema_wizard_action)d"
                                         string="Buy tickets"
                                         class="btn btn-sm btn-primary"
-                                        attrs="{'invisible': [('remaining_seats', '=', 0)]}"
-                                >Buy</button>
+                                        attrs="{'invisible': [('remaining_seats', '&lt;=', 0)]}"
+                                >Buy
+                                </button>
                             </div>
                         </t>
                     </templates>

@@ -32,6 +32,12 @@ class MovieShow(models.Model):
         store=False,
     )
 
+    place_category_ids = fields.One2many(
+        related='cinema_hall_id.amount_place_category_ids',
+        readonly=True,
+        store=False,
+    )
+
     def _compute_remaining_seats(self):
         for show in self:
             total_seats = show.cinema_hall_id.number_of_seats

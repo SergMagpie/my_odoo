@@ -18,7 +18,6 @@ class AmountPlaces(models.Model):
     place_category_id = fields.Many2one('cinema.place_category', required=True)
     cinema_hall_id = fields.Many2one('cinema.hall', required=True)
 
-    # todo make a limiter for creating categories by the number of seats in the hall
     # todo create a kanban form for change category
     def name_get(self):
         result = []
