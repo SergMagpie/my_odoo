@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="analogue_catalogue_tree" model="ir.ui.view">
+        <field name="name">analogue_catalogue_tree</field>
+        <field name="model">analogue.catalogue</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="analogue_brand"/>
+                <field name="product_id"/>
+                <field name="internal_notes"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="analogue_catalogue_form" model="ir.ui.view">
+        <field name="name">analogue_catalogue_form</field>
+        <field name="model">analogue.catalogue</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="analogue_brand"/>
+                    </group>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="product_templ_id" readonly="1"/>
+                    </group>
+                    <field name="internal_notes" placeholder="Say something important..."/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="analogue_catalogue_act" model="ir.actions.act_window">
+        <field name="name">Catalogue of Analogue</field>
+        <field name="res_model">analogue.catalogue</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_analogue_catalogue"
+              action="analogue_catalogue_act"
+              name="Catalogue of Analogue"
+              sequence="5"
+              parent="sale.product_menu_catalog"/>
+
+</odoo>

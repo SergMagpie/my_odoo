@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_partner_form_inherit_rkb" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit.rkb</field>
+        <field name="model">res.partner</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']" position="inside">
+                <group string="Bank data" name="bank_account_number">
+                <field name="rkb_bank_account_number"/>
+                </group>
+            </xpath>
+
+            <field name="function" position="attributes">
+                <attribute name="attrs">{'required': [('company_type','=','person'),('type','=','contact')]}</attribute>
+            </field>
+
+            <field name="mobile" position="attributes">
+                <attribute name="attrs">{'required': [('company_type','=','person'),('type','=','contact')]}</attribute>
+            </field>
+
+            <field name="email" position="attributes">
+                <attribute name="attrs">{'required': [('company_type','=','person'),('type','=','contact')]}</attribute>
+            </field>
+
+            <xpath expr="//notebook//field[@name='child_ids']" position="replace">
+                <field name="child_ids"
+                       mode="kanban"
+                       context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2,
+                       'default_city': city, 'default_state_id': state_id, 'default_zip': zip,
+                       'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer,
+                       'default_lang': lang,}">
+                    <kanban>
+                        <field name="color"/>
+                        <field name="name"/>
+                        <field name="title"/>
+                        <field name="type"/>
+                        <field name="email"/>
+                        <field name="parent_id"/>
+                        <field name="is_company"/>
+                        <field name="function"/>
+                        <field name="phone"/>
+                        <field name="street"/>
+                        <field name="street2"/>
+                        <field name="zip"/>
+                        <field name="city"/>
+                        <field name="country_id"/>
+                        <field name="mobile"/>
+                        <field name="state_id"/>
+                        <!--<field name="image_small"/>-->
+                        <field name="image"/>
+                        <field name="lang"/>
+                        <!-- fields in form x2many view to diminish requests -->
+                        <field name="comment"/>
+                        <field name="customer"/>
+                        <field name="display_name"/>
+                        <field name="supplier"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                    <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                    <div class="o_kanban_image">
+                                        <img t-if="record.image.raw_value" t-att-src="'data:image/png;base64,'+record.image.raw_value"/>
+                                        <t t-if="!record.image.raw_value">
+                                            <img t-if="record.type.raw_value === 'delivery'" t-att-src='_s + "/base/static/src/img/truck.png"'/>
+                                            <img t-if="record.type.raw_value === 'invoice'" t-att-src='_s + "/base/static/src/img/money.png"'/>
+                                            <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                <img t-if="record.is_company.raw_value === true" t-att-src='_s + "/base/static/src/img/company_image.png"'/>
+                                                <img t-if="record.is_company.raw_value === false" t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <field name="name"/>
+                                        <div t-if="record.function.raw_value"><field name="function"/></div>
+                                        <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                                        <div t-if="record.type.raw_value != 'contact'">
+                                            <div>
+                                                <field name="zip"/>
+                                                <field name="city"/>
+                                            </div>
+                                            <field t-if="record.state_id.raw_value" name="state_id"/>
+                                            <field name="country_id"/>
+                                        </div>
+                                        <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                        <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                    <form string="Contact / Address">
+                        <sheet>
+                            <!-- parent_id and type fields needed in attrs in base_address_city module which overwrites
+                            _fields_view_get() of partner. It would be better to put those fields there but the web client
+                            dosen't support when a field is displayed several times in the same view.-->
+                            <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                            <field name="parent_id" invisible="1"/>
+                            <hr/>
+                            <group>
+                                <group attrs="{'invisible': [('type','=', 'contact')]}">
+                                    <label for="street" string="Address"/>
+                                    <div>
+                                        <div class="o_address_format" name="div_address">
+                                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                            <field name="city" placeholder="City" class="o_address_city"/>
+                                            <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' context="{'country_id': country_id, 'zip': zip}"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                        </div>
+                                    </div>
+                                </group>
+                                <group>
+                                    <field name="name" string="Contact Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                    <field name="rkb_department_customer_executive"/>
+                                    <field name="title" placeholder="e.g. Mr."
+                                        attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                    <field name="function" placeholder="e.g. Sales Director"
+                                        attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                    <field name="email"/>
+                                    <field name="phone" widget="phone"/>
+                                    <field name="mobile" widget="phone"/>
+                                    <field name="comment" placeholder="internal note..."/>
+                                </group>
+                            </group>
+                            <field name="supplier" invisible="True"/>
+                            <field name="customer" invisible="True"/>
+                            <field name="lang" invisible="True"/>
+                            <field name="image" invisible="True"/>
+                        </sheet>
+                    </form>
+                </field>
+            </xpath>
+
+            <xpath expr="//field[@name='website']" position="after">
+                <!--<field name="rkb_executive_responsibility" widget="many2many_tags"/>-->
+                <!--<field name="rkb_customer_activity"/>-->
+                <!--<field name="rkb_department_customer_executive"/>-->
+                <field name="customer_number" attrs="{'invisible': [('is_company','=', False)], 'readonly': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <!--<field name="rkb_responsible_seller_user"/>-->
+                <field name="rkb_curator"/>
+            </xpath>
+            <xpath expr="//field[@name='property_delivery_carrier_id']" position="before">
+                <field name="rkb_delivery_type"/>
+                <field name="rkb_delivery_condition"/>
+                <field name="all_markup"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="placeholder">Statuses...</attribute>
+            </xpath>
+            <xpath expr="//group[@name='purchase']" position="inside">
+                    <field name="is_driver"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_tree_inherit_rkb" model="ir.ui.view">
+        <field name="name">view.partner.tree.inherit.rkb</field>
+        <field name="model">res.partner</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="customer_number"/>
+            </field>
+            <field name="phone" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="email" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="country_id" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </field>
+            <field name="country_id" position="before">
+                <field name="user_id"/>
+                <field name="rkb_curator"/>
+            </field>
+            <field name="country_id" position="after">
+                <field name="category_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_flow_view_res_partner_filter">
+        <field name="name">sale.flow.view.res.partner.filter</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="supplier" position="after">
+               <filter string="Created 180-190 days ago" name="180_190_days"
+               domain="['&amp;', ('create_date', '&gt;=', (context_today() - relativedelta(days=190)).strftime('%%Y-%%m-%dd')), ('create_date', '&lt;', (context_today() - relativedelta(days=180)).strftime('%%Y-%%m-%dd'))]"
+               />
+           </filter>
+        </field>
+    </record>
+
+</odoo>

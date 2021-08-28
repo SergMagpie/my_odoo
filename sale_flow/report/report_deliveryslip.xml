@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table[3]/thead/tr" position="replace">
+            <tr>
+                <th><strong>Product</strong></th>
+                <th>Total NET weight/kg</th>
+                <th>Total GROSS weight/kg</th>
+                <th name="lot_serial" t-if="has_serial_number">
+                    Lot/Serial Number
+                </th>
+                <th class="text-center"><strong>Ordered Quantity</strong></th>
+                <t t-if="any([move_line.state == 'done' for move_line in o.move_line_ids])">
+                    <th  class="text-right">
+                        <strong>Delivered Quantity</strong>
+                    </th>
+                </t>
+            </tr>
+        </xpath>
+        <xpath expr="//table[3]/tbody/tr" position="replace">
+            <tr t-foreach="o.move_line_ids" t-as="move_line">
+                <td>
+                    <span t-field="move_line.product_id"/>
+                    <p t-if="o.picking_type_code == 'outgoing'">
+                        <span t-field="move_line.product_id.sudo().description_pickingout"/>
+                    </p>
+                    <p t-if="o.picking_type_code == 'incoming'">
+                        <span t-field="move_line.product_id.sudo().description_pickingin"/>
+                    </p>
+                </td>
+                <t t-if="has_serial_number">
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <span t-field="move_line.lot_id"/>
+                                    <t t-if="not move_line.lot_id">
+                                        <span t-field="move_line.lot_name"/>
+                                    </t>
+                                </td>
+                                <td name="lot_qty">
+                                    <t t-if="move_line.product_qty">
+                                        <span t-field="move_line.product_qty"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </t>
+                <td class="text-center">
+                    <span t-field="move_line.move_id.total_net_weight"/>
+                </td>
+                <td class="text-center">
+                    <span t-field="move_line.move_id.total_gross_weight"/>
+                </td>
+                <td class="text-center">
+                    <span t-field="move_line.ordered_qty"/>
+                    <span t-field="move_line.product_uom_id"/>
+                </td>
+                <td class="text-right" t-if="move_line.state == 'done'">
+                    <t t-if="move_line.ordered_qty != move_line.qty_done">
+                        <t t-set="backorder" t-value="o.search([('backorder_id', '=', o.id), ('state', 'not in', ['cancel', 'done'])])"/>
+                    </t>
+                    <span t-field="move_line.qty_done"/>
+                    <span t-field="move_line.product_uom_id"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+</odoo>

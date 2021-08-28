@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="analog_product_tree_view" model="ir.ui.view">
+        <field name="name">analog_product_tree_view</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree default_order="qty_available desc">
+                <field name="name"/>
+                <field name="qty_available"/>
+                <field name="virtual_available"/>
+                <field name="list_price"/>
+                <field name="standard_price"/>
+                <field name="last_purchase_price"/>
+                <field name="categ_id"/>
+                <field name="type"/>
+                <field name="uom_id" options="{'no_open': True, 'no_create': True}" groups="product.group_uom"/>
+                <field name="active" invisible="1"/>
+                <field name="rkb_pdf_drawing_name"/>
+                <field name="rkb_pdf_drawing" widget="binary" filename="rkb_pdf_drawing_name"/>
+                <field name="rkb_inner_diameter"/>
+                <field name="rkb_outer_diameter"/>
+                <field name="rkb_width"/>
+                <field name="rkb_additional_parameter"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_flow_sale_order_line_tree_view" model="ir.ui.view">
+        <field name="name">sale.flow.sale.order.line.tree.view</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id"/>
+                <field name="product_uom_qty"/>
+                <field name="price_unit"/>
+                <field name="total_coast_rkb"/>
+                <field name="rkb_date_planned"/>
+                <field name="rkb_description"/>
+                <field name="discount"/>
+                <field name="price_subtotal"/>
+                <field name="commission_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_flow_sale_margin_form">
+        <field name="name">sale.flow.sale.margin.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+        <field name="arch" type="xml">
+            <field name="margin" position="replace">
+            </field>
+        </field>
+    </record>
+
+    <record id="so_view_form_sale_flow_sale_crm" model="ir.ui.view">
+        <field name="name">so_view_form_sale_flow_sale_crm</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_crm.sale_view_inherit123"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='opportunity_id']" position="replace">
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_margin.sale_margin_sale_order_line_form">
+        <field name="name">sale_margin_sale_order_line_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="after">
+                <field name="purchase_price" groups="base.group_user" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_flow_sale_order_line_form">
+        <field name="name">sale.flow.sale.order.line.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="after">
+                <button name="search_product_with_similar_suffix"
+                        type="object"
+                        icon="fa-search"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="replace">
+                <field name="purchase_price" groups="base.group_user" invisible="1"/>
+                <field name="option_price_first"
+                       string="Option price"
+                       readonly="1"
+                       force_save="1"
+                       groups="sale_flow.sale_flow_sale_price_first"/>
+                <button name="set_option_price"
+                        type="object"
+                        icon="fa-sign-in"
+                        context="{'set_price': 'option_price_first'}"
+                        help="Set price"
+                        groups="sale_flow.sale_flow_sale_price_first"/>
+                <field name="option_price_second"
+                       string="Option price"
+                       readonly="1"
+                       force_save="1"
+                       groups="sale_flow.sale_flow_sale_price_second"/>
+                <button name="set_option_price"
+                        type="object"
+                        icon="fa-sign-in"
+                        context="{'set_price': 'option_price_second'}"
+                        help="Set price"
+                        groups="sale_flow.sale_flow_sale_price_second"/>
+                <field name="option_price_third"
+                       string="Option price"
+                       readonly="1"
+                       force_save="1"
+                       groups="sale_flow.sale_flow_sale_price_third"/>
+                <button name="set_option_price"
+                        type="object"
+                        icon="fa-sign-in"
+                        context="{'set_price': 'option_price_third'}"
+                        help="Set price"
+                        groups="sale_flow.sale_flow_sale_price_third"/>
+                <field name="price_unit"
+                       readonly="1"
+                       force_save="1"/>
+                <button name="reset_price_unit"
+                        type="object"
+                        icon="fa-times"
+                        help="Reset price"
+                        groups="sale_flow.sale_flow_sale_price_first"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="so_view_form_sale_flow" model="ir.ui.view">
+        <field name="name">so_view_form_sale_flow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <button name="action_confirm" position="after">
+                <button name="action_create_purchase"
+                        id="action_create_purchase"
+                        string="Request prices"
+                        type="object"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['sent']), ('rfq_count', '>', 0)]}"
+                        groups="sales_team.group_sale_salesman_all_leads"/>
+                <button name="action_create_purchase"
+                        id="action_create_purchase"
+                        string="Request prices"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('rfq_count', '>', 0)]}"
+                        groups="sales_team.group_sale_salesman_all_leads"/>
+            </button>
+
+            <button name="action_view_invoice" position="before">
+                <field name="rfq_ids" invisible="1"/>
+                <button type="object"
+                        name="action_view_purchase"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o"
+                        attrs="{'invisible': [('rfq_count', '=', 0)]}">
+                    <field name="rfq_count" widget="statinfo" string="RFQs"/>
+                </button>
+            </button>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_so_lines"
+                        class="oe_stat_button"
+                        icon="fa-money"
+                        type="object">
+                    <field name="so_lines_count" widget="statinfo" string="Sale Order Lines" help="Sale Order Lines"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//page[1]" position="after">
+                <page name="analogue_order_list_ids" string="Analogue Order Line">
+                    <field name="analogue_order_list_ids" nolabel="1">
+                        <tree editable="top">
+                            <field name="analogue_id"/>
+                            <field name="analogue_product_name" readonly="1"/>
+                            <field name="internal_notes"/>
+                            <field name="qty"/>
+                            <field name="product_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <div class="butts_create_new_ver"
+                     attrs="{'invisible': ['|',('state','not in',('draft','sent')),('parent_id','!=',False)]}">
+                    <button name="action_new_version"
+                            icon="fa-arrow-right"
+                            type="object"
+                            confirm="Are you sure to create NEW VERSION of Quotation?"
+                            string="Create New version"
+                            class="btn-link new_version_butt"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="display_version" class="oe_inline version_class"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_order']" position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="replace">
+                <field name="date_order" string="Date of Quotation"/>
+            </xpath>
+            <xpath expr="//field[@name='confirmation_date']" position="after">
+                <field name="rkb_delivery_date" string="Deadline of Quotation"/>
+                <field name="rkb_delivery_type" string="Delivery Type"/>
+                <field name="rkb_delivery_condition" string="Delivery Condition"/>
+                <field name="rkb_vendor_id" domain="[('supplier','=',True),('company_type','=',True)]"/>
+            </xpath>
+            <xpath expr="//field[@name='analytic_account_id']" position="replace">
+            </xpath>
+            <field name="partner_id" position="replace">
+                <field name="partner_id" domain="['&amp;',  ('customer', '=', True), ('is_company', '=', True)]"/>
+            </field>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="version" invisible="1"/>
+                <field name="analytic_account_id"/>
+                <field name="rkb_final_customer"
+                       domain="[('customer','=',True)]"
+                       context="{'search_default_customer':1, 'show_address': 1}"
+                       options='{"always_reload": True}'/>
+                <field name="opportunity_id"/>
+                <field name="parent_id"
+                       readonly="1"
+                       attrs="{'invisible': [('parent_id','=',False)]}"/>
+            </xpath>
+            <field name="user_id" position="after">
+                <field name="curator_id"/>
+            </field>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="attributes">
+                <attribute name="string">RKB designation</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='layout_category_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='qty_delivered']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                <field name="rkb_product_position"/>
+                <field name="internal_notes" string="Positions in Customer Request" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="before">
+                <field name="ordered_product_name" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="replace">
+                <field name="product_uom_qty"/>
+                <field name="price_unit"/>
+                <field name="total_coast_rkb" string="Total RKB cost"/>
+                <field name="rkb_date_planned" string="Delivery term"/>
+                <field name="rkb_description" string="RKB Notes"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='analytic_tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/form/label[1]" position="replace">
+                <label for="rkb_description"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='name']" position="replace">
+                <field name="rkb_description"/>
+                <field name="internal_notes" string="Positions in Customer Request"/>
+            </xpath>
+
+
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
+                <field name="ordered_product_name"/>
+                <field name="ordered_product_brand_name"/>
+                <field name="rkb_date_planned" string="Delivery term"/>
+                <field name="rkb_product_note"/>
+            </xpath>
+            <xpath expr="//group[@name='sales_person']" position="after">
+                <group string="RKB Purchase Information" name="rkb_purchase">
+                    <field name="rkb_customer_code" readonly="1"/>
+                    <field name="rkb_quote_number" readonly="1"/>
+                    <field name="rkb_date" readonly="1"/>
+                    <field name="rkb_crm" readonly="1"/>
+                    <field name="rkb_operator" readonly="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="child_ids"
+                      string="Previous vrsions"
+                      attrs="{'invisible': [('parent_id','!=',False)]}">
+                    <field name="child_ids" nolabel="1" readonly="1"/>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_order_tree_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view_order_tree_inherit_sale_flow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="display_version"/>
+                <field name="rkb_quote_number"/>
+                <field name="parent_id"/>
+            </field>
+            <field name="user_id" position="after">
+                <field name="curator_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view_quotation_tree_inherit_sale_flow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="date_order" position="before">
+                <field name="display_version"/>
+                <field name="rkb_quote_number"/>
+                <field name="parent_id"/>
+            </field>
+            <field name="user_id" position="after">
+                <field name="curator_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view_sales_order_filter_inherit_sale_flow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="rkb_quote_number"/>
+                <field name="parent_id" string="Previous vrsions"/>
+                <filter name="version" string="Group by Versions" domain="[]" context="{'group_by':'parent_id'}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

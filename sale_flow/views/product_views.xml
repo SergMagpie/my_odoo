@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view.product.template.form.inherit.rkb.email.parser</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <field name="type" position="after">
+                <field name="rkb_item_type"/>
+                <field name="rkb_sub_categ"/>
+            </field>
+            <xpath expr="//group[@name='stock_property']" position="after">
+                <group string="Technical data (coupling dimensions)" name="technical_data">
+                    <label for="rkb_inner_diameter"/>
+                    <div class="o_row" name="rkb_inner_diameter">
+                        <field name="rkb_inner_diameter"/>
+                        <span>mm</span>
+                    </div>
+                    <label for="rkb_outer_diameter"/>
+                    <div class="o_row" name="rkb_outer_diameter">
+                        <field name="rkb_outer_diameter"/>
+                        <span>mm</span>
+                    </div>
+                    <label for="rkb_width"/>
+                    <div class="o_row" name="rkb_width">
+                        <field name="rkb_width"/>
+                        <span>mm</span>
+                    </div>
+                    <label for="rkb_additional_parameter" invisible="1"/>
+                    <div class="o_row" name="rkb_additional_parameter" invisible="1">
+                        <field name="rkb_additional_parameter"/>
+                        <span>mm</span>
+                    </div>
+                    <field name="rkb_pdf_drawing_name" invisible="1"/>
+                    <field name="rkb_pdf_drawing" widget="binary" filename="rkb_pdf_drawing_name"/>
+                </group>
+            </xpath>
+            <xpath expr="/form/sheet/notebook" position="inside">
+                <page name="analogs" string="Analogs">
+                    <field name="analogs_ids" nolabel="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="analogue_brand"/>
+                            <field name="internal_notes"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Additional comment" name="additional_comment">
+                    <group>
+                        <field name="rkb_additional_comment" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//group[@name='group_standard_price']//field[@name='company_id']" position="before">
+                <field name="is_main_company" invisible="1"/>
+                <field name="option_price_first"
+                       widget='monetary'
+                       options="{'currency_field': 'currency_id', 'field_digits': True}"
+                       attrs="{'readonly': [('is_main_company', '=', False)]}"
+                       groups="sale_flow.sale_flow_sale_price_first"
+                       string="Option price first"/>
+                <field name="option_price_second"
+                       widget='monetary'
+                       options="{'currency_field': 'currency_id', 'field_digits': True}"
+                       attrs="{'readonly': [('is_main_company', '=', False)]}"
+                       groups="sale_flow.sale_flow_sale_price_second"
+                       string="Option price second"/>
+                <field name="option_price_third"
+                       widget='monetary'
+                       options="{'currency_field': 'currency_id', 'field_digits': True}"
+                       attrs="{'readonly': [('is_main_company', '=', False)]}"
+                       groups="sale_flow.sale_flow_sale_price_third"
+                       string="Option price third"/>
+            </xpath>
+            <xpath expr="//group[@name='group_standard_price']//field[@name='list_price']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_flow_product_template_tree_view" model="ir.ui.view">
+        <field name="name">sale.flow.product.template.product.tree</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="name" position="before">
+                <field name="image" widget="image"/>
+            </field>
+            <field name="name" position="after">
+                <field name="rkb_pdf_drawing_name"/>
+                <field name="rkb_pdf_drawing" widget="binary" filename="rkb_pdf_drawing_name"/>
+                <field name="rkb_inner_diameter"/>
+                <field name="rkb_outer_diameter"/>
+                <field name="rkb_width"/>
+                <field name="rkb_additional_parameter"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_template_kanban_extended_view">
+        <field name="name">Product Template Kanban Extended</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_kanban_details')]/ul" position="replace">
+                <ul>
+                    <li class="rkb-red-price">
+                        <span groups="sale_flow.sale_flow_sale_price_first">Price:</span>
+                        <field name="option_price_first"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id', 'field_digits': True}" 
+                               groups="sale_flow.sale_flow_sale_price_first"/>
+                        <span groups="sale_flow.sale_flow_sale_price_second">/</span>
+                        <field name="option_price_second"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id', 'field_digits': True}" 
+                               groups="sale_flow.sale_flow_sale_price_second"/>
+                        <span groups="sale_flow.sale_flow_sale_price_third">/</span>
+                        <field name="option_price_third"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id', 'field_digits': True}" 
+                               groups="sale_flow.sale_flow_sale_price_third"/>
+                    </li>
+                </ul>
+            </xpath>
+
+            <field name="currency_id" position="after">
+                <field name="rkb_inner_diameter"/>
+                <field name="rkb_outer_diameter"/>
+                <field name="rkb_width"/>
+                <field name="rkb_additional_parameter"/>
+                <field name="rkb_pdf_drawing_name"/>
+                <field name="rkb_pdf_drawing"/>
+            </field>
+            <xpath expr="//div[hasclass('oe_kanban_details')]/strong[1]" position="after">
+                <br/>
+                <field name="rkb_pdf_drawing_name" invisible="1"/>
+                <field name="rkb_pdf_drawing" widget="binary" filename="rkb_pdf_drawing_name"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_kanban_details')]" position="inside">
+                <t t-esc="record.rkb_inner_diameter.value"/>x<t t-esc="record.rkb_outer_diameter.value"/>x<t t-esc="record.rkb_width.value"/>x<t t-esc="record.rkb_additional_parameter.value"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_search_view_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">product.template.search</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="attributes">
+                <attribute name="filter_domain">['|','|',('default_code','ilike',self),('name','ilike',self),('barcode','ilike',self)]</attribute>
+            </field>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="rkb_inner_diameter"/>
+                <field name="rkb_outer_diameter"/>
+                <field name="rkb_width"/>
+                <field name="rkb_additional_parameter"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

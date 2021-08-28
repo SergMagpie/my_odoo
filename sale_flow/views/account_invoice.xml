@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_analytic_lead_view_form_sale_flow" model="ir.ui.view">
+        <field name="name">account_analytic_lead_view_form_sale_flow</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="opportunity_id" readonly="1"/>
+                <field name="other" widget="boolean"/>
+            </field>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+
+                <button name="mass_action_update_sale_order"
+                        class="oe_link"
+                        icon="fa-external-link-square"
+                        string="Update Quotation"
+                        type="object"
+                        attrs="{'invisible': [('rfq_ids','=', False)]}"/>
+
+                <button name="action_view_all_po"
+                        type="object"
+                        icon="fa-outdent"
+                        class="oe_stat_button">
+                    <field name="all_po_count" widget="statinfo" string="RFQs"/>
+                </button>
+
+                <button name="action_view_all_so"
+                        type="object"
+                        icon="fa-pencil-square-o"
+                        class="oe_stat_button">
+                    <field name="all_so_count" widget="statinfo" string="Quotations"/>
+
+                </button>
+
+                <button  class="oe_stat_button"
+                         name="expense_view"
+                         type="object"
+                         icon="fas fa-search-dollar">
+                    <field string="Expenses"
+                           name="expense_count"
+                           widget="statinfo"/>
+                </button>
+
+                <button name="action_view_all_picking"
+                        type="object"
+                        icon="fas fa-truck-monster"
+                        class="oe_stat_button">
+                    <field name="all_transfers_count"
+                           widget="statinfo"
+                           string="Transfers"/>
+                </button>
+
+                <button name="action_view_all_invoices"
+                        type="object"
+                        icon="fa-usd"
+                        class="oe_stat_button">
+                    <field name="all_invoice_count"
+                           widget="statinfo"
+                           string="Invoices"/>
+                </button>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_budget.view_account_analytic_account_form_inherit_budget">
+            <field name="name">account.analytic.account.form.inherit.budget</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="priority" eval="50"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//group[@name='main']" position='after'>
+                    <div class="calc_main">
+                        <group name="calc" col="4" class="custom_group_class">
+                            <group attrs="{'invisible': [('other', '=', False)]}" col="1" class="XYZ">
+                                <div>
+                                    <span><strong>Partners account:</strong></span>
+                                    <group class="oe_subtotal_footer oe_right" name="so">
+                                        <field name="total_nds"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="total_fare_to_client"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="total_other_markup"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="duty_total"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline">
+                                            <label for="total_partner_account"/>
+                                        </div>
+                                        <field name="total_partner_account"
+                                               nolabel="1"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"
+                                               class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                </div>
+                            </group>
+                            <group name="so" col="1" class="XYZ">
+
+                                <div>
+                                    <span><strong>Quotation:</strong></span>
+                                    <group class="oe_subtotal_footer oe_right" name="so">
+                                        <field name="total_partner_account"
+                                               string="Partners account"
+                                               attrs="{'invisible': [('other', '=', False)]}"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="total_bonus"
+                                               widget="monetary"
+                                               string="Commission"
+                                               options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="so_discount_total" widget="monetary" options="{'currency_field': 'other_currency_id'}"/>
+                                        <field name="markup_total" widget="monetary" options="{'currency_field': 'other_currency_id'}"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline">
+                                            <label for="so_amount_total"/>
+                                        </div>
+                                        <field name="so_amount_total"
+                                               nolabel="1"
+                                               widget="monetary"
+                                               options="{'currency_field': 'other_currency_id'}"
+                                               class="oe_subtotal_footer_separator"/>
+                                        <field name="commission_total"
+                                               string="Expected (%)"/>
+                                    </group>
+                                </div>
+                            </group>
+
+                            <group name="inv" col="1" class="XYZ">
+
+                                <div>
+                                    <span><strong>Investments (EUR):</strong></span>
+                                    <group class="oe_subtotal_footer oe_right" name="Investments">
+                                        <field name="fare_total" />
+
+                                        <field name="additional_total" string="Total RFQ"/>
+
+                                        <div class="oe_subtotal_footer_separator oe_inline">
+                                            <label for="po_amount_total"/>
+                                        </div>
+                                        <field name="po_amount_total"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                </div>
+                            </group>
+
+                            <group name="po" col="1" class="XYZ">
+
+                                <div>
+                                    <span><strong>RFQ (EUR):</strong></span>
+                                    <group class="oe_subtotal_footer oe_right" name="po">
+                                        <field name="discount_total"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline">
+                                            <label for="additional_total"/>
+                                        </div>
+                                        <field name="additional_total"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"/>
+
+                                    </group>
+                                </div>
+
+
+                            </group>
+
+                        </group>
+
+                    </div>
+                    <div class="calc_main oe_edit_only">
+                        <group name="set_options" col="2" class="custom_group_class">
+                            <group col="2" class="XYZ_2">
+                                <field name="all_markup"
+                                       string="Markup (coeff)"/>
+                            </group>
+                            <group col="2" class="XYZ_2">
+                                    <field name="all_discount"
+                                           string="Discount (%)"/>
+
+                            </group>
+                            <group col="2" class="XYZ_2">
+                                <field name="duty"
+                                       string="Set Fare (EUR):"/>
+
+                            </group>
+
+                        </group>
+                    </div>
+                    <div class="calc_main oe_edit_only" attrs="{'invisible': [('other', '=', False)]}">
+                        <group name="other_company" col="3" class="custom_group_class">
+                            <group>
+                                    <field name="other_company_id"
+                                           attrs="{'required': [('other', '!=', False)]}"/>
+                                    <field name="other_currency_id"/>
+                                    <field name="rate"/>
+                            </group>
+                            <group col="2" class="XYZ_2">
+
+                                    <field name="other_markup"/>
+
+                                    <field name="fare_to_client"
+                                           widget="monetary"
+                                           options="{'currency_field': 'other_currency_id'}"/>
+                                    <button name="action_set_duty"
+                                        type="object"
+                                        icon="fa-plus-square"
+                                        string="Set duties"
+                                        class="add_butts_custom_class"/>
+
+                                    <button name="action_clear_duty"
+                                            type="object"
+                                            icon="fa-plus-square"
+                                            string="Clear duties"
+                                            class="add_butts_custom_class"/>
+                            </group>
+                            <group>
+                                <field name="use_nds"/>
+
+                                <field name="nds"
+                                       attrs="{'invisible': [('use_nds', '=', False)]}"/>
+                            </group>
+                        </group>
+                    </div>
+
+                    <div class="oe_inline custom_margin">
+                        <label for="margin_total" string="Margin Total (EUR):"/>
+                        <field name="margin_total"
+                               class="oe_inline"/>
+                        <span>  [</span>
+                        <field name="margin_total_percent" nolabel="1" class="oe_inline"/>
+                        <span>%]</span>
+                    </div>
+
+                    <button name="action_set_date_so_line" class="oe_highlight"
+                        string="Set Date Planned"
+                        type="object"
+                        attrs="{'invisible': [('so_line','=', False)]}"/>
+
+                    <notebook name="po">
+                        <page name="po" string="RFQ">
+                            <notebook name="sub_po">
+                                <page name="rkb" string="RKB settings">
+                                    <notebook name="rkb_settings">
+                                        <page name="rkb_lines" string="RKB RFQ lines">
+                                            <field name="po_line" string="RFQ lines" nolabel="1">
+                                                <tree editable="top">
+                                                    <field name="rkb_product_position"/>
+                                                    <field name="product_id"/>
+                                                    <field name="ordered_product_name"/>
+                                                    <!--<field name="ordered_product_brand_name"/>-->
+                                                    <field name="rkb_description" string="RKB Delivery time"/>
+                                                    <field name="product_qty"/>
+                                                    <field name="price_unit"
+                                                           class="custom_important_field"/>
+                                                    <field name="discount"
+                                                           class="custom_important_field"/>
+                                                    <field name="markup"
+                                                           class="custom_important_field"/>
+                                                    <field name="order_state" invisible="1"/>
+                                                    <field name="duty"
+                                                           string="Fare per unit"
+                                                           class="custom_important_field"/>
+                                                    <field name="agents" invisible="1"/>
+                                                    <field name="soline" invisible="1"/>
+                                                    <field name="bonus"
+                                                           class="custom_important_field"
+                                                           readonly="1"
+                                                           string="Commission (%)"/>
+                                                    <field name="commission_status" invisible="1"/>
+                                                    <field name="original_price"/>
+                                                    <field name="price_subtotal"/>
+                                                    <field name="order_id"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                        <page name="rkb_rfq" string="RKB RFQs">
+                                            <field name="rfq_ids" string="RFQs" nolabel="1" readonly="1">
+                                                <tree>
+                                                    <field name="name"/>
+                                                    <field name="display_version"/>
+                                                    <field name="date_order"/>
+                                                    <field name="date_planned"/>
+                                                    <field name="company_id"/>
+                                                    <field name="sale_id"/>
+                                                    <field name="amount_total"/>
+                                                    <field name="state"/>
+
+                                                    <button name="action_rfq_send"
+                                                            class="oe_link"
+                                                            icon="fa-envelope-o"
+                                                            attrs="{'invisible': [('state','in',['cancel','done', 'to approve', 'purchase'])]}"
+                                                            string="Send RFQ by Email"
+                                                            type="object"
+                                                            context="{'send_rfq':True}"/>
+
+                                                    <button name="action_update_sale_order"
+                                                            class="oe_link"
+                                                            icon="fa-external-link-square"
+                                                            string="Update Qoutation"
+                                                            type="object"
+                                                            attrs="{'invisible': ['|',('state','in', ['cancel']),('sale_id','=',False)]}"/>
+
+                                                    <button name="action_new_ver_sale_order"
+                                                            class="oe_link"
+                                                            icon="fa-external-link"
+                                                            string="Create New version of Quotation"
+                                                            type="object"
+                                                            confirm="Are you sure to create NEW VERSION of Quotation?"
+                                                            attrs="{'invisible': ['|',('state','in', ['cancel']),('sale_id','=',False)]}"/>
+
+                                                    <button name="button_approve"
+                                                            type="object"
+                                                            states="to approve"
+                                                            string="Approve Order"
+                                                            icon="fa-thumbs-o-up"
+                                                            class="oe_link"/>
+
+                                                    <button name="button_draft"
+                                                            states="cancel"
+                                                            string="Set to Draft"
+                                                            class="oe_link"
+                                                            icon="fa-repeat"
+                                                            type="object"/>
+
+                                                    <button name="button_confirm"
+                                                            type="object"
+                                                            attrs="{'invisible': [('state','not in',['received','so_updated', 'draft', 'sent'])]}"
+                                                            string="Confirm Order"
+                                                            class="oe_link"
+                                                            icon="fa-check-square-o"
+                                                            id="bid_confirm"/>
+
+                                                    <button name="button_done"
+                                                            type="object"
+                                                            string="Lock"
+                                                            class="oe_link"
+                                                            icon="fa-lock"
+                                                            states="purchase"/>
+
+                                                    <button name="button_cancel"
+                                                            attrs="{'invisible': [('state','not in',['draft','to approve', 'sent', 'purchase'])]}"
+                                                            string="Cancel"
+                                                            class="oe_link"
+                                                            icon="fa-ban"
+                                                            type="object"/>
+                                                </tree>
+                                            </field>
+                                        </page>
+                                    </notebook>
+                                </page>
+                                <page name="other"
+                                      string="Partners line settings"
+                                      attrs="{'invisible': [('other','=',False)]}">
+
+                                    <div>
+                                        <field name="po_line2" nolabel="1">
+                                            <tree editable="top">
+                                                <field name="rkb_product_position"/>
+                                                <field name="product_id"/>
+                                                <field name="rkb_description"/>
+                                                <field name="product_qty"/>
+                                                <field name="price_unit"
+                                                       class="custom_important_field"/>
+                                                <field name="call_of_duty"
+                                                       string="Duty (%)"
+                                                       class="custom_important_field_2"/>
+                                                <field name="nds"
+                                                       string="TAX (%)"
+                                                       class="custom_important_field_2"/>
+                                                <field name="other_markup"
+                                                       class="custom_important_field_2"/>
+                                                <field name="fare_to_client"
+                                                       string="Fare to customer per unit"
+                                                       class="custom_important_field"/>
+
+                                                <field name="original_price"/>
+                                                <field name="order_id"/>
+                                            </tree>
+                                        </field>
+                                    </div>
+                                </page>
+                            </notebook>
+                        </page>
+                        <page name="agents" string="Agents">
+                            <field name="agents_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="commission"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="so" string="Quotations" autofocus="autofocus">
+
+                            <notebook name="so_lists">
+                                <page name="so" string="Quotations">
+                                    <div>
+                                        <field name="quotations_ids" string="Quotations" nolabel="1" readonly="1">
+                                            <tree>
+                                                <field name="name"/>
+                                                <field name="display_version"/>
+                                                <field name="date_order"/>
+                                                <field name="commitment_date"/>
+                                                <field name="user_id"/>
+                                                <field name="amount_total"/>
+                                                <field name="state"/>
+
+                                                <button name="action_quotation_send"
+                                                        class="oe_link"
+                                                        icon="fa-envelope-o"
+                                                        attrs="{'invisible': [('state','not in',['draft', 'sent', 'sale'])]}"
+                                                        string="Send Quotation"
+                                                        type="object"/>
+
+                                                <button name="print_quotation"
+                                                        type="object"
+                                                        string="Print Quotation"
+                                                        icon="fa-print"
+                                                        class="oe_link"/>
+
+                                                <button name="action_create_purchase"
+                                                        class="oe_link"
+                                                        icon="fa-external-link"
+                                                        string="Create RFQ"
+                                                        type="object"
+                                                        attrs="{'invisible': [('state','not in',['sent'])]}"
+                                                        groups="sales_team.group_sale_salesman_all_leads"/>
+
+                                                <button name="action_confirm"
+                                                        type="object"
+                                                        string="Confirm Quotation"
+                                                        class="oe_link"
+                                                        icon="fa-check-square-o"/>
+
+                                                <button name="action_cancel"
+                                                        attrs="{'invisible': [('state','not in',['draft', 'sent', 'sale'])]}"
+                                                        string="Cancel"
+                                                        class="oe_link"
+                                                        icon="fa-ban"
+                                                        type="object"/>
+                                            </tree>
+                                        </field>
+                                    </div>
+                                </page>
+
+                                <page name="so_line" string="Quotation lines" autofocus="autofocus">
+                                   <field name="so_line" string="Quotation lines" nolabel="1">
+                                       <tree editable="top">
+                                           <field name="product_id"/>
+                                           <field name="product_uom_qty"/>
+                                           <field name="option_price_first"
+                                                  string="Option price"
+                                                  readonly="1"
+                                                  force_save="1"
+                                                  groups="sale_flow.sale_flow_sale_price_first"/>
+                                           <button name="set_option_price"
+                                                   type="object"
+                                                   icon="fa-sign-in"
+                                                   context="{'set_price': 'option_price_first'}"
+                                                   help="Set price"
+                                                   groups="sale_flow.sale_flow_sale_price_first"/>
+                                           <field name="option_price_second"
+                                                  string="Option price"
+                                                  readonly="1"
+                                                  force_save="1"
+                                                  groups="sale_flow.sale_flow_sale_price_second"/>
+                                           <button name="set_option_price"
+                                                   type="object"
+                                                   icon="fa-sign-in"
+                                                   context="{'set_price': 'option_price_second'}"
+                                                   help="Set price"
+                                                   groups="sale_flow.sale_flow_sale_price_second"/>
+                                           <field name="option_price_third"
+                                                  string="Option price"
+                                                  readonly="1"
+                                                  force_save="1"
+                                                  groups="sale_flow.sale_flow_sale_price_third"/>
+                                           <button name="set_option_price"
+                                                   type="object"
+                                                   icon="fa-sign-in"
+                                                   context="{'set_price': 'option_price_third'}"
+                                                   help="Set price"
+                                                   groups="sale_flow.sale_flow_sale_price_third"/>
+                                           <field name="price_unit"
+                                                  readonly="1"
+                                                  force_save="1"/>
+                                           <button name="reset_price_unit"
+                                                   type="object"
+                                                   icon="fa-times"
+                                                   help="Reset price"
+                                                   groups="sale_flow.sale_flow_sale_price_first"/>
+                                           <field name="total_coast_rkb"/>
+                                           <field name="rkb_date_planned"/>
+                                           <field name="rkb_description"/>
+                                           <field name="discount"/>
+                                           <field name="price_subtotal"/>
+                                           <field name="commission_free" invisible="1"/>
+                                           <field name="invoice_lines" invisible="1"/>
+                                           <field name="agents" invisible="1"/>
+                                           <button name="button_edit_agents"
+                                                   icon="fa-users"
+                                                   attrs="{'invisible': ['|', ('commission_free', '=', True), ('invoice_lines', '!=', [])]}"
+                                                   type="object"/>
+                                           <field name="commission_status"/>
+                                           <field name="order_id"/>
+                                           <field name="order_state" string="Quotation state"/>
+                                       </tree>
+                                   </field>
+                                </page>
+
+                                <page name="anlogue" string="Analogue Order list">
+                                    <field name="analogue_order_list_ids" string="Analogue Order list" nolabel="1">
+                                        <tree>
+                                            <field name="analogue_id"/>
+                                            <field name="analogue_product_name"/>
+                                            <field name="internal_notes"/>
+                                            <field name="qty"/>
+                                            <field name="so_id" string="Qoutation"/>
+                                            <field name="order_state" string="Quotation state"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="so_discount_total" widget="monetary" options="{'currency_field': 'other_currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="so_amount_total"/>
+                                </div>
+                                <field name="so_amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'other_currency_id'}"/>
+                            </group>
+                        </page>
+
+                        <page name="order_list" string="Order list">
+                            <field name="order_list_ids" nolabel="1">
+                                <tree editable="top">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="rkb_product_position"/>
+                                    <field name="ordered_product"
+                                           required="1"
+                                           class="custom_important_field"/>
+                                    <field name="internal_notes"
+                                           required="1"
+                                           placeholder="Add customer request here"
+                                           class="custom_important_field"/>
+                                    <field name="qty" class="custom_important_field"/>
+                                    <field name="analogue_product_name"
+                                           string="Product brand"
+                                           domain="[('supplier','=',True),('company_type','=','company')]"
+                                           class="custom_not_important_field"
+                                           help="Fill only on system request"/>
+
+                                    <field name="product_id" placeholder="Do not FILL" string="RKB designation"/>
+                                    <field name="analogue_id" placeholder="Do not FILL"/>
+                                    </tree>
+                            </field>
+                        </page>
+
+                        <page string="Budget Items">
+                            <field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree">
+                                <tree string="Budget Items" editable="top">
+                                    <field name="crossovered_budget_id"/>
+                                    <field name="general_budget_id"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="paid_date"/>
+                                    <field name="planned_amount" widget="monetary"/>
+                                    <field name="practical_amount" sum="Practical Amount" widget="monetary"/>
+                                    <field name="theoritical_amount" sum="Theoritical Amount" widget="monetary"/>
+                                    <field name="percentage"/>
+                                </tree>
+                                <form string="Budget Items">
+                                    <field name="crossovered_budget_id"/>
+                                    <field name="general_budget_id"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="paid_date"/>
+                                    <field name="planned_amount" widget="monetary"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+    </record>
+
+    <record id="action_contracts_sale_flow" model="ir.actions.act_window">
+        <field name="name">Management account</field>
+        <field name="res_model">account.analytic.account</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('opportunity_id', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new contract.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="contracts_list_menu"
+              name="Management account"
+              web_icon="sale_flow,static/img/images.png"
+              parent=""
+              action="action_contracts_sale_flow"
+              sequence="8"/>
+
+</odoo>

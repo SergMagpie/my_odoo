@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_purchasequotation_document" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//table" position="before">
+            <div class="row mt32 mb32">
+                <table class="table">
+                    <tbody>
+                        <tr t-if="o.incoterm_id">
+                            <div class="col-xs-4">
+                                <strong>Incoterm</strong>
+                                <p t-field="o.incoterm_id"/>
+                            </div>
+                        </tr>
+                        <tr t-if="o.payment_term_id">
+                            <div class="col-xs-4">
+                                <strong>Payment Terms</strong>
+                                <p t-field="o.payment_term_id"/>
+                            </div>
+                        </tr>
+                        <tr t-if="o.rkb_quote_number">
+                            <div class="col-xs-4">
+                                <strong>RFQ Number From RKB</strong>
+                                <p t-field="o.rkb_quote_number"/>
+                            </div>
+                        </tr>
+                        <tr t-if="o.rkb_date">
+                            <div class="col-xs-4">
+                                <strong>Date</strong>
+                                <p t-field="o.rkb_date"/>
+                            </div>
+                        </tr>
+                        <tr t-if="o.rkb_crm">
+                            <div class="col-xs-4">
+                                <strong>CRM</strong>
+                                <p t-field="o.rkb_crm"/>
+                            </div>
+                        </tr>
+                        <tr t-if="o.rkb_operator">
+                            <div class="col-xs-4">
+                                <strong>Operator</strong>
+                                <p t-field="o.rkb_operator"/>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+
+        <xpath expr="//table/thead//th[1]" position="after">
+            <th class="text-center"><strong>Brand</strong></th>
+        </xpath>
+        <xpath expr="//table/tbody//td[1]" position="after">
+            <td class="text-center"><span t-field="order_line.ordered_product_brand_name"/></td>nter
+        </xpath>
+    </template>
+
+</odoo>

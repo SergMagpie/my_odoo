@@ -1,0 +1,7 @@
+# Translation of Odoo Server.
+
+#. module: sale_flow
+#: model:ir.model,name:sale.model_crm_lead
+#, fuzzy
+msgid "Add Products"
+msgstr "Добавить Продукты"

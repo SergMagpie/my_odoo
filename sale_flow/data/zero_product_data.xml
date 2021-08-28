@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="product_product_0" model="product.product">
+			<field eval="1" name="active"/>
+		    <field name="purchase_requisition">rfq</field>
+			<field name="purchase_method">receive</field>
+			<field name="invoice_policy">order</field>
+			<field eval="0" name="rental"/>
+            <field name="sale_line_warn">no-message</field>
+			<field eval="1" name="purchase_ok"/>
+            <field name="categ_id" ref="product.product_category_all"/>
+		    <field name="name">undefined_product</field>
+            <field name="service_type">manual</field>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="service_tracking">no</field>
+			<field eval="[(6,0,[ref('purchase.route_warehouse0_buy')])]" name="route_ids"/>
+			<field eval="0" name="sale_ok"/>
+			<field name="type">product</field>
+			<field name="purchase_line_warn">no-message</field>
+			<field name="expense_policy">no</field>
+			<field eval="1" name="sequence"/>
+			<field name="tracking">none</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+	    </record>
+    </data>
+</odoo>

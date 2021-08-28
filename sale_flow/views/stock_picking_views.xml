@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_picking_form_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view.stock.picking.form.inherit.rkb.email.parser</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='move_lines']/tree/field[@name='quantity_done']" position="after">
+                <field name="invoice_number" string="Invoice #"/>
+                <field name="contract_specification" string="Contract/Specification"/>
+                <field name="total_net_weight"/>
+                <field name="total_gross_weight"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sp_view_form_sale_flow_sale" model="ir.ui.view">
+        <field name="name">sp_view_form_sale_flow_sale</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_id']" position="after">
+                <field name="driver_id" domain="[('is_driver', '=', True)]"/>
+                <field name="vehicle_id" domain="[('driver_id', '=', driver_id)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sp_view_tree_sale_flow_sale" model="ir.ui.view">
+        <field name="name">sp_view_tree_sale_flow_sale</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="carrier_tracking_ref"/>
+                </field>
+        </field>
+    </record>
+
+    <record id="sp_view_search_sale_flow_sale" model="ir.ui.view">
+        <field name="name">sp_view_search_sale_flow_sale</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="carrier_tracking_ref"/>
+                </field>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_rkb" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="inside">
+            <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                <div t-if="doc.rkb_quote_number" class="col-xs-3">
+                    <strong>RFQ Number From RKB:</strong>
+                    <p t-field="doc.rkb_quote_number"/>
+                </div>
+                <div t-if="doc.rkb_date" class="col-xs-3">
+                    <strong>Date:</strong>
+                    <p t-field="doc.rkb_date"/>
+                </div>
+                <div t-if="doc.rkb_crm" class="col-xs-3">
+                    <strong>CRM:</strong>
+                    <p t-field="doc.rkb_crm"/>
+                </div>
+                <div t-if="doc.rkb_operator" class="col-xs-3">
+                    <strong>Operator:</strong>
+                    <p t-field="doc.rkb_operator"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

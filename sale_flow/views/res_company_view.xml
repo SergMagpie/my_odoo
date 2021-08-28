@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_sale_flow" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit.rkb.email.parser</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Custom Reports">
+                    <group>
+                        <field name="sale_order_custom_report_id"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='report_footer']" position="after">
+                <field name="add_watermark"/>
+                <field name="watermark_selection" attrs="{'invisible': [('add_watermark', '=', False)], 'required': [('add_watermark', '=', True)]}"/>
+                <field name="custom_watermark_name" attrs="{'invisible': ['|', ('add_watermark', '=', False), ('watermark_selection', 'in', ['letter_head', 'company_logo', 'time', False])], 'required': [('watermark_selection', '=', 'custom_name')]}"/>
+                <field name="letter_head" attrs="{'invisible': ['|', ('add_watermark', '=', False), ('watermark_selection', 'in', ['custom_name', 'company_logo', 'time', False])], 'required': [('watermark_selection', '=', 'letter_head')]}" widget="binary" filename="custom_watermark_name"/>
+                <field name="time" invisible="1" attrs="{'invisible': ['|', ('add_watermark', '=', False), ('watermark_selection', 'in', ['custom_name', 'company_logo', 'letter_head', False])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="option_markup_first"/>
+                <field name="option_markup_second"/>
+                <field name="option_markup_third"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

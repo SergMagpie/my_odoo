@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_partner_form_sale_flow" model="ir.actions.act_window">
+         <field name="name">Customer Base</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">res.partner</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree</field>
+         <field name="domain">[('customer','=',True),('is_company','=',True)]</field>
+         <field name="search_view_id" ref="base.view_res_partner_filter"/>
+    </record>
+
+    <menuitem id="sale.res_partner_menu"
+              name="Customer Base"
+              web_icon="sale_flow,static/img/icon.png"
+              parent=""
+              action="action_partner_form_sale_flow"
+              sequence="8"/>
+</odoo>

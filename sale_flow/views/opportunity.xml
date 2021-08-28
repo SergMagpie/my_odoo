@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="lead_view_form_sale_flow" model="ir.ui.view">
+        <field name="name">lead_view_form_sale_flow</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+
+            <field name="email_from" position="before">
+                <field name="analytic_account_id"
+                       invisible="1"/>
+            </field>
+
+            <xpath expr="//page[1]" position="before">
+                <page name="order_list_ids" string="Order List">
+                        <field name="order_list_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="rkb_product_position"/>
+                                <field name="ordered_product"
+                                       required="1"
+                                       class="custom_important_field"/>
+                                <field name="internal_notes"
+                                       invisible="1"
+                                       required="0"
+                                       placeholder="Add customer request here"
+                                       class="custom_important_field"/>
+                                <field name="qty" class="custom_important_field"/>
+                                <field name="analogue_product_name"
+                                       string="Product brand"
+                                       domain="[('supplier','=',True),('company_type','=','company')]"
+                                       class="custom_not_important_field"
+                                       help="Fill only on system request"/>
+
+                                <field name="product_id" placeholder="Do not FILL" string="RKB designation"/>
+                                <field name="analogue_id" placeholder="Do not FILL"/>
+                            </tree>
+                        </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="opportunity_view_form_sale_flow" model="ir.ui.view">
+        <field name="name">opportunity_view_form_sale_flow</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header[last()]" position="inside">
+                <button  class="oe_stat_button"
+                         name="button_add_products"
+                         type="object"
+                         string="Add Products"/>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="get_document_emails"
+                        type="object"
+                        string="e-mails"
+                        icon="fa-envelope-o"/>
+
+                <!--<button  class="oe_stat_button"-->
+                         <!--name="expense_view"-->
+                         <!--type="object"-->
+                         <!--icon="fas fa-search-dollar">-->
+                    <!--<field string="Expenses"-->
+                           <!--name="expense_count"-->
+                           <!--widget="statinfo"/>-->
+                <!--</button>-->
+
+                <!--<button name="action_view_all_picking"-->
+                        <!--type="object"-->
+                        <!--icon="fas fa-truck-monster"-->
+                        <!--class="oe_stat_button">-->
+                    <!--<field name="all_transfers_count" widget="statinfo" string="Transfers"/>-->
+
+                <!--</button>-->
+
+                <!--<button name="action_view_all_invoices"-->
+                        <!--type="object"-->
+                        <!--icon="fa-usd"-->
+                        <!--class="oe_stat_button">-->
+                    <!--<field name="all_invoice_count" widget="statinfo" string="Invoices"/>-->
+
+                <!--</button>-->
+
+                <!--<button name="action_view_all_po"-->
+                        <!--type="object"-->
+                        <!--icon="fa-outdent"-->
+                        <!--groups="purchase.group_purchase_manager"-->
+                        <!--class="oe_stat_button">-->
+                    <!--<field name="all_po_count" widget="statinfo" string="RFQs"/>-->
+
+                <!--</button>-->
+            </xpath>
+
+            <!--<field name="date_deadline" position="before">-->
+                <!--<field name="analytic_account_id"-->
+                       <!--context="{'default_partner_id': partner_id, 'default_name': name}"-->
+                       <!--attrs="{'invisible': [('analytic_account_id', '=', False)],-->
+                               <!--'readonly': [('analytic_account_id', '!=', False)]}"/>-->
+                <!--<field name="actual_revenue" readonly="1"/>-->
+                <!--<field name="create_date"/>-->
+            <!--</field>-->
+
+            <!--<xpath expr="//page[1]" position="before">-->
+                <!--<page name="order_list_ids" string="Order List">-->
+                    <!--<field name="order_list_ids" nolabel="1">-->
+                        <!--<tree editable="top">-->
+                            <!--<field name="sequence" widget="handle"/>-->
+                            <!--<field name="rkb_product_position"/>-->
+                            <!--<field name="ordered_product"-->
+                                   <!--required="1"-->
+                                   <!--class="custom_important_field"/>-->
+                            <!--<field name="internal_notes"-->
+                                   <!--required="1"-->
+                                   <!--placeholder="Add customer request here"-->
+                                   <!--class="custom_important_field"/>-->
+                            <!--<field name="qty" class="custom_important_field"/>-->
+                            <!--<field name="analogue_product_name"-->
+                                   <!--string="Product brand"-->
+                                   <!--domain="[('supplier','=',True),('company_type','=','company')]"-->
+                                   <!--class="custom_not_important_field"-->
+                                   <!--help="Fill only on system request"/>-->
+
+                            <!--<field name="product_id" placeholder="Do not FILL" string="RKB designation"/>-->
+                            <!--<field name="analogue_id" placeholder="Do not FILL"/>-->
+                        <!--</tree>-->
+                    <!--</field>-->
+                <!--</page>-->
+            <!--</xpath>-->
+
+            <xpath expr="//group[1]" position="replace">
+                <group name="main">
+                    <group>
+                        <field name="partner_id"
+                               string="Customer"
+                               context="{'search_default_customer': 1,
+                                         'default_name': partner_name,
+                                         'default_street': street,
+                                         'default_street2': street2,
+                                         'default_city': city,
+                                         'default_state_id': state_id,
+                                         'default_zip': zip,
+                                         'default_country_id': country_id,
+                                         'default_function': function,
+                                         'default_phone': phone,
+                                         'default_mobile': mobile,
+                                         'default_email': email_from,
+                                         'default_user_id': user_id,
+                                         'default_team_id': team_id,
+                                         'default_website': website}"/>
+                        <field name="email_from" string="Email" widget="email"/>
+                        <field name="phone" widget="phone"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                    </group>
+
+                    <group>
+                        <field name="analytic_account_id"
+                               context="{'default_partner_id': partner_id, 'default_name': name}"
+                               attrs="{'invisible': [('analytic_account_id', '=', False)],
+                                       'readonly': [('analytic_account_id', '!=', False)]}"/>
+                        <field name="actual_revenue" readonly="1"/>
+                        <field name="create_date" string="Opportunity date"/>
+                        <field name="date_deadline" string="Deadline"/>
+                    </group>
+                </group>
+            </xpath>
+
+            <xpath expr="//notebook" position="replace">
+                <notebook colspan="4">
+
+                    <page name="order_list_ids" string="Order List">
+                        <field name="order_list_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="rkb_product_position"/>
+                                <field name="ordered_product"
+                                       required="1"
+                                       class="custom_important_field"/>
+                                <field name="internal_notes"
+                                       invisible="1"
+                                       required="0"
+                                       placeholder="Add customer request here"
+                                       class="custom_important_field"/>
+                                <field name="qty" class="custom_important_field"/>
+                                <field name="analogue_product_name"
+                                       string="Product brand"
+                                       domain="[('supplier','=',True),('company_type','=','company')]"
+                                       class="custom_not_important_field"
+                                       help="Fill only on system request"/>
+
+                                <field name="product_id" placeholder="Do not FILL" string="RKB designation"/>
+                                <field name="analogue_id" placeholder="Do not FILL"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Internal Notes">
+                        <field name="description"/>
+                    </page>
+
+                    <page name="lead" string="Contact Information">
+                        <group>
+                            <group>
+                                <field name="partner_name"/>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                </div>
+                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                            </group>
+
+                            <group>
+                                <label for="contact_name"/>
+                                <div class="o_row">
+                                    <field name="contact_name"/>
+                                    <field name="title" placeholder="Title" domain="[]" options="{&quot;no_open&quot;: True}"/>
+                                </div>
+                                <field name="function"/>
+                                <field name="mobile"/>
+                                <field name="opt_out"/>
+                            </group>
+                            <group string="Marketing">
+                                <field name="campaign_id"/>
+                                <field name="medium_id"/>
+                                <field name="source_id"/>
+                            </group>
+                            <group string="Misc" name="Misc">
+                                <field name="day_open" groups="base.group_no_one"/>
+                                <field name="day_close" groups="base.group_no_one"/>
+                                <field name="referred"/>
+                                <field name="type" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+
+                </notebook>
+                <group>
+                    <group name="secondary">
+                        <field name="user_id"
+                               context="{'default_groups_ref': ['base.group_user',
+                                         'base.group_partner_manager',
+                                         'sales_team.group_sale_salesman_all_leads'],
+                                         'team_id': team_id}"
+                               domain="[('share', '=', False)]"/>
+                        <field name="rkb_customer_executive"/>
+                        <field name="team_id" widget="selection"/>
+                    </group>
+                    <group>
+                        <field name="rkb_customer_aim"/>
+                        <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="date_conversion" invisible="1"/>
+                    </group>
+                </group>
+            </xpath>
+
+            <!--<field name="lost_reason" position="after">-->
+                <!--<field name="rkb_customer_aim"/>-->
+            <!--</field>-->
+
+            <!--<field name="priority" position="replace">-->
+            <!--</field>-->
+            <!--<field name="tag_ids" position="replace">-->
+            <!--</field>-->
+
+            <xpath expr="//h2[hasclass('o_row')]/div[1]" position="before">
+                 <div>
+                     <label for="priority" class="oe_edit_only"/>
+                     <div class="o_row">
+                         <field name="priority" widget="priority"/>
+                     </div>
+                 </div>
+            </xpath>
+
+            <!--<field name="phone" position="after">-->
+
+                <!--<field name="rkb_customer_executive"/>-->
+            <!--</field>-->
+
+
+        </field>
+    </record>
+
+    <record id="opportunity_view_form_sale_flow_inh" model="ir.ui.view">
+        <field name="name">opportunity_view_form_sale_flow_Inh</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(sale_crm.sale_action_quotations_new)d']" position="replace">
+                <button string="New Quotation"
+                        name="action_create_so"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('sale_number', '!=', 0)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--<record id="email_multiple_emails_and_company_alias.crm_case_opportunity_view_form_inherit_email_multiple_emails_and_company_alias" model="ir.ui.view">-->
+        <!--<field name="name">crm.lead.form.inherit.email.multiple.emails.and.company.alias</field>-->
+        <!--<field name="model">crm.lead</field>-->
+        <!--<field name="inherit_id" ref="sale_flow.opportunity_view_form_sale_flow"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<xpath expr="//field[@name='tag_ids']" position="after">-->
+                <!--<field name="init_company_id"/>-->
+            <!--</xpath>-->
+        <!--</field>-->
+    <!--</record>-->
+
+    <record id="opportunity_product_line_view_form_sale_flow" model="ir.ui.view">
+        <field name="name">opportunity_product_line_view_form_sale_flow</field>
+        <field name="model">crm.product.order.list</field>
+        <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="analogue_id"
+                                       options="{'no_quick_create': True, 'no_create_edit': True, 'no_create': True}"/>
+                                <field name="product_id"/>
+                            </group>
+                            <group>
+                                <field name="analogue_product_name" readonly="1"/>
+                                <field name="qty"/>
+                            </group>
+                            <field name="internal_notes"/>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+</odoo>
