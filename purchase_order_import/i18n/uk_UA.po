@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_order_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-08 15:02+0000\n"
+"PO-Revision-Date: 2021-04-08 15:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__barcode
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line__barcode
+msgid "Barcode"
+msgstr "Штрих-код"
+
+#. module: purchase_order_import
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_wizard_form
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__create_uid
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__create_date
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__display_name
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__display_name
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line__display_name
+msgid "Display Name"
+msgstr "Відобразити назву"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order__id
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__id
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__id
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__import_file
+msgid "Import File"
+msgstr "Імпортувати файл"
+
+#. module: purchase_order_import
+#: code:addons/purchase_order_import/models/purchase_order.py:0
+#: code:addons/purchase_order_import/wizard/purchase_order_import_wizard.py:0
+#, python-format
+msgid "Import Purchase Order Lines"
+msgstr "Імпорт позицій закупівлі"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__import_wizard_id
+msgid "Import wizard"
+msgstr "Імпорт візард"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard____last_update
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard____last_update
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line____last_update
+msgid "Last Modified on"
+msgstr "Останні зміни на"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__write_uid
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Останнє оновив"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__write_date
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__write_date
+msgid "Last Updated on"
+msgstr "Останнє оновлено"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__line_count
+msgid "Line count"
+msgstr "Кількість рядків"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_wizard_form
+msgid "Lines"
+msgstr "Позиції"
+
+#. module: purchase_order_import
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_wizard_form
+msgid "Parse File"
+msgstr "Зчитати файл"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__price
+msgid "Price"
+msgstr "Ціна"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__product_id
+msgid "Product"
+msgstr "Товар"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__product_barcode_conflict
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line__product_barcode_conflict
+msgid "Product barcode conflict"
+msgstr ""
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_line__production_date
+msgid "Production date"
+msgstr ""
+
+#. module: purchase_order_import
+#: model:ir.model,name:purchase_order_import.model_purchase_order
+msgid "Purchase Order"
+msgstr "Замовлення на купівлю"
+
+#. module: purchase_order_import
+#: model:ir.model,name:purchase_order_import.model_purchase_order_import_line_wizard
+msgid "Purchase Order Import Line Wizard"
+msgstr "Імпорту замовлень візард"
+
+#. module: purchase_order_import
+#: model:ir.model,name:purchase_order_import.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Рядок замовлення на купівлю"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__purchase_order_id
+msgid "Purchase order"
+msgstr "Замовлення на закупівлю"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__purchase_order_line_id
+msgid "Purchase order line"
+msgstr "Позиція замовлення на закупівлю"
+
+#. module: purchase_order_import
+#: model:ir.model,name:purchase_order_import.model_purchase_order_import_wizard
+msgid "PurchaseImport"
+msgstr "Закупівля імпорт"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_line_wizard__qty
+msgid "Qty"
+msgstr "Кількість"
+
+#. module: purchase_order_import
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_inherit_form
+msgid "Update PO from file"
+msgstr "Оновити об'єкт (PO) з файлу"
+
+#. module: purchase_order_import
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_wizard_form
+msgid "Update Purchase"
+msgstr "Оновити запит на закупівлю"
+
+#. module: purchase_order_import
+#: model_terms:ir.ui.view,arch_db:purchase_order_import.view_purchase_order_import_wizard_form
+msgid "Update Purchase & Create Vendor Bill"
+msgstr "Оновити запит на закупівлю & Створити рахунок постачальника"
+
+#. module: purchase_order_import
+#: model:ir.model.fields,field_description:purchase_order_import.field_purchase_order_import_wizard__vendor_id
+msgid "Vendor"
+msgstr "Постачальник"
