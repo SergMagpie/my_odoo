@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="construction_project_purchase_relatives_form_inherited" model="ir.ui.view">
+            <field name="name">construction_project_purchase_relatives_form_inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="impact_project_customization.construction_project_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='purchases']" position="inside">
+
+                        <div class="oe_button_box" name="button_box" style="margin-top: -12px;">
+<!--                            <button-->
+<!--                                    type="object"-->
+<!--                                    name="button_new_purchase_request_relatives_action"-->
+<!--                                    class="oe_stat_button"-->
+<!--                                    icon="fa-plus-square-o"-->
+<!--                                    string="New purchase request"-->
+<!--                                    help="Button for make new purchase request action"-->
+<!--                            />-->
+                            <button
+                                    type="object"
+                                    name="button_purchase_request_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-comments-dollar"
+                                    help="Button for viewing purchase relatives requisitions"
+                            >
+                                <field
+                                        name="purchase_request_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                            <button
+                                    type="object"
+                                    name="button_purchase_request_line_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-list-alt"
+                                    help="Button for viewing purchase relatives requisition lines"
+                            >
+                                <field
+                                        name="purchase_request_line_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+<!--                            <button-->
+<!--                                    type="object"-->
+<!--                                    name="button_new_purchase_relatives_action"-->
+<!--                                    class="oe_stat_button"-->
+<!--                                    icon="fa-plus"-->
+<!--                                    string="New purchase"-->
+<!--                                    help="Button for make new purchase action"-->
+<!--                            />-->
+                            <button
+                                    type="object"
+                                    name="button_purchase_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-barcode"
+                                    help="Button for viewing purchases relatives"
+                            >
+                                <field
+                                        name="purchase_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                            <button
+                                    type="object"
+                                    name="button_purchase_order_line_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-paperclip"
+                                    help="Button for viewing purchase lines relatives"
+                            >
+                                <field
+                                        name="purchase_order_line_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                            <button
+                                    type="object"
+                                    name="button_stock_picking_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-rocket"
+                                    help="Button for viewing stock pickings relatives"
+                            >
+                                <field
+                                        name="purchase_stock_picking_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                            <button
+                                    type="object"
+                                    name="button_account_move_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-truck"
+                                    help="Button for viewing moves relatives"
+                            >
+                                <field
+                                        name="purchase_account_move_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                            <button
+                                    type="object"
+                                    name="button_account_payment_relatives_action"
+                                    class="oe_stat_button"
+                                    icon="fa-money"
+                                    help="Button for viewing account payments relatives"
+                            >
+                                <field
+                                        name="purchase_account_payment_count_relatives"
+                                        widget="statinfo"
+                                />
+                            </button>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

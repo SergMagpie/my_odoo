@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_request_line_form_inherit" model="ir.ui.view">
+            <field name="name">impact_project_purchase.purchase_order_request_form</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main']//field[@name='analytic_account_id']" position="replace">
+                    <field name="relatives_account_analytic_ids" invisible="1"/>
+                    <field name="construction_project_id" invisible="1"/>
+                    <field name="analytic_account_id"
+                           groups="analytic.group_analytic_accounting"
+                           domain="[('id', 'in', relatives_account_analytic_ids)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
