@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_purchase_order_import_wizard_form" model="ir.ui.view">
+            <field name="name">view_purchase_order_import_wizard_form</field>
+            <field name="model">purchase.order.import.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="import_file"/>
+                        </group>
+                        <group>
+                            <field name="vendor_id" readonly="1"/>
+<!--                            <field name="notes"/>-->
+                            <field name="purchase_order_id" invisible="1"/>
+                            <field name="line_count" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="lines" string="Lines">
+                            <field name="line_ids">
+                                <tree editable="top" create="false" edit="true" decoration-danger="product_barcode_conflict">
+                                    <field name="product_id"/>
+                                    <field name="barcode"/>
+                                    <field name="qty"/>
+                                    <field name="price"/>
+                                    <field name="product_barcode_conflict" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Parse File" name="parse_import_file" type="object" class="btn-primary"/>
+                        <button string="Update Purchase" name="update_purchase" type="object" class="btn-primary" attrs="{'invisible': [('line_count', '=', 0)]}"/>
+                        <button string="Update Purchase &amp; Create Vendor Bill" name="update_purchase_and_create_vendor_bill" type="object" class="btn-primary"
+                                attrs="{'invisible': [('line_count', '=', 0)]}"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
