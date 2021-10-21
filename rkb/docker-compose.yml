@@ -1,0 +1,40 @@
+
+version: '2'
+services:
+  odoo:
+    image: ykhlon/base_odoo_v11
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGUSER=odoo
+      - PGPASSWORD=odoo
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8126:8069"
+      - "8127:8071"
+      - "8128:8072"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    volumes:
+      - ./config:/etc/odoo
+      - ./extra_addons:/opt/odoo/extra_addons
+      - ./odoo/odoo:/usr/lib/python3/dist-packages/odoo
+  db:
+    image: ykhlon/base_db_9.5
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    ports:
+      - "5489:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"

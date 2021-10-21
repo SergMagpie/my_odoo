@@ -1,0 +1,108 @@
+version: "2.2"
+services:
+  odoo:
+    image: registry.gitlab.simbioz.com.ua/ykhlon/odoo_v14_box:base_odoo_v14
+    links:
+      - db
+    environment:
+#      - HOST=db
+#      - PORT=5432
+      - PGHOST=db
+      - PGUSER=odoo
+      - PGPASSWORD=odoo
+      - USER=odoo
+      - PASSWORD=odoo
+    container_name: odoo14base_web_impact
+    depends_on:
+      - db
+    ports:
+      - '7000:8069'
+      - '7001:8072'
+    volumes:
+      - ./docker/odoo14/odoo.conf:/etc/odoo/odoo.conf
+      - ./docker/odoo14/entrypoint.sh:/entrypoint.sh
+      - ./extra_addons:/opt/odoo/extra_addons
+      - ./odoo_addons/odoo:/usr/lib/python3/dist-packages/odoo
+#      - ./volumes/odoo/filestore:/opt/odoo/data/filestore
+#      - ./volumes/odoo/sessions:/opt/odoo/data/sessions
+    cap_add:
+      - SYS_PTRACE
+#    networks:
+#      - baspardev
+
+  db:
+    image: registry.gitlab.simbioz.com.ua/ykhlon/odoo_v14_box:base_db_v11
+    environment:
+#      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    container_name: odoo14base_db_impact
+    ports:
+      - '6000:5432'
+    volumes:
+      - ./docker/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: |
+      postgres
+      -c 'config_file=/etc/postgresql/postgresql.conf'
+      -c 'hba_file=/etc/postgresql/pg_hba.conf'
+#    networks:
+#      - baspardev
+
+#  prometheus:
+#    image: prom/prometheus:latest
+#    depends_on:
+#      - postgres-exporter
+#    volumes:
+#      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+#    #        - prometheus_data:/prometheus
+#    command:
+#      - '--config.file=/etc/prometheus/prometheus.yml'
+#    ports:
+#      - '9557:9090'
+#  node-exporter:
+#    image: prom/node-exporter
+#    volumes:
+#      - /proc:/host/proc:ro
+#      - /sys:/host/sys:ro
+#      - /:/rootfs:ro
+#    command:
+#      - "--path.procfs=/host/proc"
+#      - "--path.sysfs=/host/sys"
+#      - "--collector.filesystem.ignored-mount-points"
+#      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+#    ports:
+#      - '9558:9100'
+#  postgres-exporter:
+#    image: wrouesnel/postgres_exporter
+#    depends_on:
+#      - db
+#    ports:
+#      - '9559:9187'
+#    command: "--extend.query-path=/queries.yaml"
+#    environment:
+#      - DATA_SOURCE_NAME=postgresql://odoo:odoo@95.217.61.54:9556/cx?sslmode=disable
+#    volumes:
+#      - ./monitoring/postgres_exporter/queries.yaml:/queries.yaml:rw
+#  grafana:
+#    image: grafana/grafana:latest
+#    volumes:
+##      - ./monitoring/grafana/entrypoint.sh:/app/entrypoint.sh
+#      - ./monitoring/grafana/config/grafana.ini:/etc/grafana/grafana.ini
+#      - ./monitoring/grafana/config/datasources:/etc/grafana/datasources
+##      - ./monitoring/grafana/config/plugins:/var/lib/grafana/plugins
+#      - grafana_data:/var/lib/grafana
+#    env_file:
+#      - ./monitoring/grafana/grafana-docker.env
+#    depends_on:
+#      - prometheus
+#    ports:
+#      - '9560:3000'
+#networks:
+#  baspardev:
+
+#volumes:
+#  odoo-web-data:
+#  odoo-db-data:
+#  grafana_data:
+
