@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="simbioz_hr_job_employee_rotation_view_form" model="ir.ui.view">
+            <field name="name">Employee Rotation Form</field>
+            <field name="model">hr.job.employee.rotation</field>
+            <field name="arch" type="xml">
+                <form string="Employee Rotation" class="o_applicant_form">
+                    <header>
+                        <button name="set_draft"
+                                string="Set draft"
+                                states="new,pending,approval,closed"
+                                type="object"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_user"/>
+                        <button name="set_new"
+                                string="Set new"
+                                states="draft,pending,approval,closed"
+                                type="object"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_user"/>
+                        <button name="set_pending"
+                                string="Set pending"
+                                states="draft,new,approval,closed"
+                                type="object"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_user"/>
+                        <button name="set_approval"
+                                string="Set approval"
+                                states="draft,pending,new,closed"
+                                type="object"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_user"/>
+                        <button name="set_closed"
+                                string="Set closed"
+                                states="draft,pending,approval,new"
+                                type="object"
+                                class="oe_highlight"
+                                groups="hr_recruitment.group_hr_recruitment_user"/>
+                        <field name="state" widget="statusbar" readonly="True"
+                               statusbar_visible="draft,new,pending,approval,closed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="job_id"/>
+                            <field name="department_id"/>
+                            <field name="parent_id"/>
+                            <field name="experience_all"/>
+                            <field name="experience_previous_jobs"/>
+                            <field name="desired_job_id"/>
+                            <field name="desired_department_id"/>
+                            <field name="date_completion"/>
+                            <field name="request_initiator"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'open_attachments': True}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="hr_job_employee_rotation_view_tree" model="ir.ui.view">
+            <field name="name">Employee rotation tree</field>
+            <field name="model">hr.job.employee.rotation</field>
+            <field name="arch" type="xml">
+                <tree string="Employee rotation">
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="parent_id"/>
+                    <field name="experience_all"/>
+                    <field name="experience_previous_jobs"/>
+                    <field name="desired_job_id"/>
+                    <field name="desired_department_id"/>
+                    <field name="date_completion"/>
+                    <field name="request_initiator"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="simbioz_hr_job_employee_rotation_action" model="ir.actions.act_window">
+            <field name="name">Employee rotation</field>
+            <field name="res_model">hr.job.employee.rotation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Employee rotation" id="employee_rotation_menu" parent="hr_recruitment.menu_hr_recruitment_root"
+                  sequence="199" action="simbioz_hr_job_employee_rotation_action"/>
+    </data>
+</odoo>

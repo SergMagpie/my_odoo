@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_analytic_account_view_form_custom" model="ir.ui.view">
+            <field name="name">account.analytic.account.form.custom</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+<!--                    <field name="contract_date_of_signing"/>-->
+<!--                    <field name="date_start"/>-->
+<!--                    <field name="date_end"/>-->
+<!--                    <field name="is_contract"/>-->
+<!--                    <field name="contract_type" attrs="{'invisible':[('is_contract','=', False)]}"/>-->
+                    <field name="full_name_custom"/>
+                    <field name="non_resident"/>
+                    <field name="vat_certificate_number"/>
+                </xpath>
+
+                <xpath expr="//sheet" string = 'Contract' position="inside">
+                    <notebook>
+                        <page name="information_about_the_contract" string="Information about the contract">
+                            <group>
+                                <group string="Commercial terms" name="purchase_information">
+                                    <field name="specification_price"/>
+                                    <field name="expiry_date_of_specification_price"/>
+                                    <field name="lending_limit_uan"/>
+<!--                                    <field name="payment_terms_id"/>-->
+                                    <field name="responsible_id"/>
+<!--                                    <field name="currency_id"/>-->
+<!--                                    <field name="parent_contract_id"/>-->
+                                </group>
+                                <group string="Orders and deliveries schedule" name="vendor_information">
+                                    <field name="schedule_id"/>
+                                    <field name="order_schedule_id"/>
+                                    <field name="delivery_schedule_id"/>
+                                    <field name="deadline_fulfilling_application_by_supplier"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_supplier_contract" model="ir.actions.act_window">
+            <field name="name">Supplier Analytic Contracts</field>
+            <field name="res_model">account.analytic.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('contract_type', '=', 'purchase')]</field>
+            <field name="context">
+                {'default_contract_type': 'purchase', 'default_is_contract': True}
+            </field>
+        </record>
+
+        <record id="action_purchase_contract" model="ir.actions.act_window">
+            <field name="name">Purchase Analytic Contracts</field>
+            <field name="res_model">account.analytic.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('contract_type', '=', 'purchase')]</field>
+            <field name="context">
+                {'default_contract_type': 'purchase', 'default_is_contract': True}
+            </field>
+        </record>
+
+
+        <record id="view_analytic_account_form_inherit_simbioz_analitic_account" model="ir.ui.view">
+            <field name="name">view_analytic_account_form_inherit_simbioz_analitic_account</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="simbioz_analytic_contract.view_account_analytic_account_form_inherit_budget"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_contract']" position="after">
+                    <field name="is_main_contract" attrs="{'invisible':[('is_contract','=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_contract_contract_supplier"
+                parent="account.menu_finance_payables"
+                action="action_supplier_contract"
+                sequence="99"
+        />
+
+        <record id="account.menu_action_account_moves_all" model="ir.ui.menu">
+            <field name="groups_id" eval="[(3,ref('base.group_no_one'))]"/>
+        </record>
+<!--        <menuitem-->
+<!--                id="menu_contract_contract_purchase"-->
+<!--                parent="purchase.menu_procurement_management"-->
+<!--                action="action_purchase_contract"-->
+<!--                sequence="99"-->
+<!--        />-->
+    </data>
+</odoo>
+
+
