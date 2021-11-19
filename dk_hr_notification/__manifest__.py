@@ -1,0 +1,28 @@
+{
+    'name': 'DK HR Notification',
+    'summary': """DK HR Notification""",
+    'category': 'Human Resources/Employees',
+    'author': 'Simbioz',
+    'maintainer': 'Simbioz Holding',
+    'website': 'https://simbioz.ua',
+    'version': '14.0.1.0.1',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'hr',
+        'hr_recruitment',
+        'simbioz_hr_job_request_for_staff_selection',
+    ],
+    'images': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/data_dk_notifications.xml',
+        'views/hr_notification.xml',
+        'views/hr_job_request_for_staff_selection_template.xml',
+    ],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

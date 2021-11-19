@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="dk_hr_notification.hr_job_request_for_staff_selection_form_inherit" model="ir.ui.view">
+            <field name="name">dk_hr_customization.hr.resignation.form</field>
+            <field name="model">hr.job.request.for.staff.selection</field>
+            <field name="inherit_id"
+                   ref="simbioz_hr_job_request_for_staff_selection.simbioz_hr_job_request_for_staff_selection_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='request_for_staff_selection']" position="after">
+                    <group name="processing" string="Processing">
+                        <field name="rejection_reason"/>
+                        <field name="reason_for_closing"/>
+                        <field name="applicant"
+                               attrs="{'invisible': [('reason_for_closing', '!=', 'filled')]}"/>
+                        <field name="date_of_employment"
+                               attrs="{'invisible': [('reason_for_closing', '!=', 'filled')]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

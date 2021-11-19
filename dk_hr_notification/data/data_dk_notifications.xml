@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_notification_selection_request_is_open" model="hr.notification">
+            <field name="template_name">selection_request_is_open</field>
+            <field name="name">Відкрито запит на підбір</field>
+            <field name="notification">
+                $first_name
+                $last_name посада
+                $job_title відкрив запит на підбір
+                $display_name в кількісті
+                $vacancies_count
+            </field>
+        </record>
+        <record id="hr_notification_selection_request_denied" model="hr.notification">
+            <field name="template_name">selection_request_denied</field>
+            <field name="name">Відхилено запит на підбір</field>
+            <field name="notification">Запит на підбір
+                $display_name в кількості
+                $vacancies_count відхилено. В зв'язку з
+                $rejection_reason
+            </field>
+        </record>
+        <record id="hr_notification_responsible_personnel_manager_has_been_appointed" model="hr.notification">
+            <field name="template_name">responsible_personnel_manager_has_been_appointed</field>
+            <field name="name">Призначено відповідального менеджера з персоналу</field>
+            <field name="notification">Запит в роботі, призначено відповідального менедежера з персоналу
+                $user_name
+            </field>
+        </record>
+        <record id="hr_notification_responsible_hr_manager_changed" model="hr.notification">
+            <field name="template_name">responsible_hr_manager_changed</field>
+            <field name="name">Змінено відповідального менеджера з персоналу</field>
+            <field name="notification">Переназначено відповідального менедежера з персоналу, з
+                $action_date відповідальний менеджер з персоналу
+                $user_name
+            </field>
+        </record>
+        <record id="hr_notification_vacancy_is_removed" model="hr.notification">
+            <field name="template_name">vacancy_is_removed</field>
+            <field name="name">Закрито запит на підбір - знята вакансія</field>
+            <field name="notification">Запит на підбір по вакансії
+                $display_name закритий. Причина: Замовник зняв вакансію.
+            </field>
+        </record>
+        <record id="hr_notification_job_offer_is_signed" model="hr.notification">
+            <field name="template_name">job_offer_is_signed</field>
+            <field name="name">Закрито запит на підбір - підписана Пропозиція по роботі</field>
+            <field name="notification">Запит на підбір по вакансії
+                $display_name закритий. Причина: кандадит
+                $applicant підписав Пропозицію по роботі. Дата виходу
+                $date_of_employment
+            </field>
+        </record>
+    </data>
+</odoo>
