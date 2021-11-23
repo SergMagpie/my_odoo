@@ -60,10 +60,6 @@ class AccountAnalyticAccount(models.Model):
         comodel_name='resource.calendar',
         string='Delivery schedule',
     )
-    deadline_fulfilling_application_by_supplier = fields.Integer(
-        string='Deadline fulfilling application by supplier',
-        help='Deadline for fulfilling the application by the supplier in days'
-    )
 
     date_start = fields.Date(
         string='Date start',

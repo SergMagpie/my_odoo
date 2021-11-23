@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-03 11:35+0000\n"
-"PO-Revision-Date: 2021-08-03 11:35+0000\n"
+"POT-Creation-Date: 2021-11-09 17:49+0000\n"
+"PO-Revision-Date: 2021-11-09 17:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,26 +16,464 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: dk_purchase_customization
-#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__contract_id
-msgid "Contract"
-msgstr "Договор поставки"
+#: model:ir.actions.report,print_report_name:dk_purchase_customization.action_dk_report_purchase_template
+msgid ""
+"\n"
+"                (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or\n"
+"                'Purchase Order - %s' % (object.name))"
+msgstr ""
 
 #. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ", in the amount of"
+msgstr "на сумму"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ", position"
+msgstr "должность"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ""
+"<br/>\n"
+"                    Bank account:"
+msgstr ""
+"<br/>\n"
+"                    Номер банковского счета:"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ""
+"<br/>\n"
+"                    Company registry:"
+msgstr ""
+"<br/>\n"
+"                    Регестрационный номер:"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ""
+"<br/>\n"
+"                Contact number:"
+msgstr ""
+"<br/>\n"
+"                Контактный номер:"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ""
+"<br/>\n"
+"                Contact person:"
+msgstr ""
+"<br/>\n"
+"                Контактное лицо:"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Всего</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Amount VAT</strong>"
+msgstr "<strong>Сумма с НДС</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Product name</strong>"
+msgstr "<strong>Товар</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Purchaser: </strong>"
+msgstr "<strong>Покупатель: </strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Qty</strong>"
+msgstr "<strong>Количество</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Total VAT</strong>"
+msgstr "<strong>Всего с НДС</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Total</strong>"
+msgstr "<strong>Всего</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Unit Price VAT</strong>"
+msgstr "<strong>Цена с НДС</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Uom</strong>"
+msgstr "<strong>Ед.изм.</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>VAT</strong>"
+msgstr "<strong>НДС %</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Vendor code</strong>"
+msgstr "<strong>Артикул</strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Vendor: </strong>"
+msgstr "<strong>Поставщик: </strong>"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "<strong>Warehouse: </strong>"
+msgstr "<strong>Название склада: </strong>"
+
+#. module: dk_purchase_customization
+#: code:addons/dk_purchase_customization/models/product_second_unit.py:0
+#, python-format
+msgid "A product can only have one unit of measure from one supplier!"
+msgstr ""
+"Продукт может иметь только одну единицу измерения от одного поставщика!"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_account_analytic_account
+msgid "Analytic Account"
+msgstr "Аналитический счёт"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "Bank name:"
+msgstr "Название банка"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.res_partner_form_inherit
+msgid "Button for viewing contracts"
+msgstr "Кнопка просмотра договоров"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.account_analytic_account_view_form_custom
+msgid "Commercial terms"
+msgstr "Коммерческие условия"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__contact_phone
+msgid "Contact phone number"
+msgstr "Контактный телефон"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__contract_id
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.account_analytic_account_view_form_custom
+msgid "Contract"
+msgstr "Договор"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__contract_date_of_signing
+msgid "Contract date of signing"
+msgstr "Дата подписания договора"
+
+#. module: dk_purchase_customization
+#: code:addons/dk_purchase_customization/models/partner.py:0
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__analytic_account_contract_ids
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_users__analytic_account_contract_ids
+#, python-format
+msgid "Contracts"
+msgstr "Договоры"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__analytic_account_contract_ids_count
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_users__analytic_account_contract_ids_count
+msgid "Contracts count"
+msgstr "Кол-во договоров"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__currency_id
+msgid "Currency"
+msgstr "Валюта"
+
+#. module: dk_purchase_customization
+#: model:ir.actions.report,name:dk_purchase_customization.action_dk_report_purchase_template
+msgid "DK Purchase Order"
+msgstr "DK заказ на покупку"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__date_end
+msgid "Date end"
+msgstr "Дата завершения"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__date_start
+msgid "Date start"
+msgstr "Дата начала"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__delivery_schedule_id
+msgid "Delivery schedule"
+msgstr "Расписание доставки"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,help:dk_purchase_customization.field_purchase_order__date_order
+msgid ""
+"Depicts the date within which the Quotation should be confirmed and "
+"converted into a purchase order."
+msgstr ""
+"Обозначает дату, в течение которой комм. предложение должно быть "
+"подтверждено и преобразовано в заказ на поставку."
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_product_secondary_unit__display_name
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
 #. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__expiry_date_of_specification_price
+msgid "Expiry date of specification price"
+msgstr "Срок годности спецификации цены"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "From the buyer:"
+msgstr "От покупателя"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "From the supplier: ____________________"
+msgstr "От продавца: ____________________"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__full_name_custom
+msgid "Full name"
+msgstr "Полное имя"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_product_secondary_unit__id
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__id
 msgid "ID"
 msgstr "Идентификатор"
 
 #. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.account_analytic_account_view_form_custom
+msgid "Information about the contract"
+msgstr "Информация о договоре"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,help:dk_purchase_customization.field_account_analytic_account__is_contract
+msgid "Is contract"
+msgstr "Это договор"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,help:dk_purchase_customization.field_account_analytic_account__is_main_contract
+msgid "Is main contract"
+msgstr "Основной договор"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_product_secondary_unit____last_update
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr "Последнее изменение"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__lending_limit_uan
+msgid "Lending limit uan"
+msgstr "Лимит кредитования грн"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__is_main_contract
+msgid "Main contract"
+msgstr "Основной договор"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__non_resident
+msgid "Non resident"
+msgstr "Нерезидент"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid ""
+"Note:<br/>\n"
+"                Warehouse schedule:"
+msgstr ""
+"Note:<br/>\n"
+"                График роботі склада:"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__date_order
+msgid "Order Deadline"
+msgstr "Срок заказа"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__order_schedule_id
+msgid "Order schedule"
+msgstr "График заказа"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "Order to the supplier"
+msgstr "Заказ поставщику"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.account_analytic_account_view_form_custom
+msgid "Orders and deliveries schedule"
+msgstr "График заказов и поставок"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__parent_contract_id
+msgid "Parent contract"
+msgstr "Родительский договор"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__payment_terms_id
+msgid "Payment terms"
+msgstr "Условия оплаты"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields.selection,name:dk_purchase_customization.selection__account_analytic_account__specification_price__price
+msgid "Price"
+msgstr "Цена"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields.selection,name:dk_purchase_customization.selection__account_analytic_account__specification_price__price_on_the_site
+msgid "Price on the site"
+msgstr "Цена на сайте"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_product_secondary_unit
+msgid "Product Secondary Unit"
+msgstr "Вторичная еденица продукта"
+
+#. module: dk_purchase_customization
+#: model:ir.actions.act_window,name:dk_purchase_customization.action_purchase_contract
+msgid "Purchase Analytic Contracts"
+msgstr "Закупка аналитических контрактов"
 
 #. module: dk_purchase_customization
 #: model:ir.model,name:dk_purchase_customization.model_purchase_order
 msgid "Purchase Order"
 msgstr "Заказ на закупку"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Позиция заказа на закупку"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__responsible_id
+msgid "Responsible"
+msgstr "Ответственный"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__schedule_id
+msgid "Schedule"
+msgstr "Расписание"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields.selection,name:dk_purchase_customization.selection__account_analytic_account__specification_price__specification
+msgid "Specification"
+msgstr "Технические характеристики"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__specification_price
+msgid "Specification price"
+msgstr "Цена по спецификации"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_stock_rule
+msgid "Stock Rule"
+msgstr "складское правило"
+
+#. module: dk_purchase_customization
+#: model:ir.actions.act_window,name:dk_purchase_customization.action_supplier_contract
+#: model:ir.ui.menu,name:dk_purchase_customization.menu_contract_contract_supplier
+msgid "Supplier Analytic Contracts"
+msgstr "Поставщик аналитических контрактов"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "Supply agreement:"
+msgstr "Договор поставки"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__is_contract
+msgid "This is a contract"
+msgstr "Это договор"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "Total names"
+msgstr "Всего наименований"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,help:dk_purchase_customization.field_purchase_order__use_vendor_currency_rate
+msgid "Use vendor currency rate"
+msgstr "Использовать курс валюты поставщика"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__use_vendor_currency_rate
+msgid "Use vendor rate"
+msgstr "Использовать ставку поставщика"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "VAT including"
+msgstr "с НДС"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "VAT:"
+msgstr "НДС"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__vat_certificate_number
+msgid "Vat certificate number"
+msgstr "Номер сертификата НДС"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_product_secondary_unit__vendor_id
+msgid "Vendor"
+msgstr "Поставщик"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__vendor_rate
+msgid "Vendor Rate"
+msgstr "Ставка поставщика"
+
+#. module: dk_purchase_customization
+#: model:ir.model,name:dk_purchase_customization.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Склад"
+
+#. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__warehouse_manager_id
+msgid "Warehouse manager"
+msgstr "Заведующий складом"
+
+#. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
+msgid "from"
+msgstr "от"

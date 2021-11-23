@@ -16,10 +16,27 @@
                 </xpath>
                 <xpath expr="//field[@name='origin']" position="after">
                     <field name="company_id"/>
-                    <field name="picking_type_id" domain="[('code','=','incoming'), '|', ('warehouse_id', '=', False), ('warehouse_id.company_id', '=', company_id)]" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
+                    <field name="picking_type_id"
+                           domain="[('code','=','incoming'), '|', ('warehouse_id', '=', False), ('warehouse_id.company_id', '=', company_id)]"
+                           options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
                 </xpath>
                 <xpath expr="//group[@name='other_info']//field[@name='company_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']//tree//field[@name='price_subtotal']" position="attributes">
+                    <attribute name="string">Amount excluding VAT</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']//tree//field[@name='price_unit']" position="attributes">
+                    <attribute name="string">Unit Price VAT</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']//field[@name='amount_untaxed']" position="attributes">
+                    <attribute name="string">Total excluding VAT</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']//field[@name='amount_tax']" position="attributes">
+                    <attribute name="string">VAT amount</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']//tree//field[@name='price_subtotal']" position="before">
+                    <field name="price_total" string="Amount VAT" widget="monetary"/>
                 </xpath>
             </field>
         </record>
@@ -30,6 +47,16 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='other_info']//field[@name='picking_type_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="purchase_order_line_inherited_form" model="ir.ui.view">
+            <field name="name">purchase_order_line_inherited_form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_order_secondary_unit.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='secondary_price']" position="attributes">
+                    <attribute name="string">Secondary price VAT</attribute>
                 </xpath>
             </field>
         </record>

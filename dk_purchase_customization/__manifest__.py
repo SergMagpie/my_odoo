@@ -15,6 +15,9 @@
         'product_secondary_unit',
         'purchase_order_secondary_unit',
         'simbioz_analytic_contract',
+        'product_supplier_info_vat',
+        'purchase_send_rfq_attachment',
+        'hr',
     ],
     'images': [],
     'external_dependencies': {

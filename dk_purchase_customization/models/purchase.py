@@ -28,23 +28,16 @@ class Purchase(models.Model):
         'cancel': [('readonly', True)],
     })
 
-    @api.depends('contract_id.deadline_fulfilling_application_by_supplier')
-    def _compute_date_planned(self):
-        """ date_planned = the earliest date_planned across all order lines. """
+    user_position_id = fields.Many2one(
+        comodel_name='hr.employee',
+        compute='_compute_user_position_id',
+        store=True,
+    )
+
+    @api.depends('user_id')
+    def _compute_user_position_id(self):
         for order in self:
-            try:
-                delivery_schedule = order.contract_id.delivery_schedule_id.attendance_ids.mapped(
-                    lambda x: int(x.dayofweek))
-            except ValueError:
-                order.date_planned = False
-                break
-            if delivery_schedule and isinstance(order.date_order, datetime):
-                week_day = order.date_order.weekday()
-                list_delta = map(lambda x: x - week_day, delivery_schedule)
-                delta = min([x if x > 0 else x + 7 for x in list_delta])
-                order.date_planned = order.date_order + timedelta(days=delta)
-            else:
-                order.date_planned = False
+            order.user_position_id = order.env['hr.employee'].search([('user_id', '=', order.user_id.id)], limit=1)
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -57,6 +50,7 @@ class Purchase(models.Model):
         else:
             self.contract_id = False
 
+    @api.model
     def create(self, vals):
         rec = super(Purchase, self).create(vals)
         rec._onchange_partner_id()
@@ -87,5 +81,16 @@ class PurchaseOrderLine(models.Model):
     @api.model
     def create(self, values):
         rec = super(PurchaseOrderLine, self).create(values)
+        rec._get_tax_from_pricelist()
         rec._onchange_quantity()
         return rec
+
+    def _get_tax_from_pricelist(self):
+        for line in self:
+            # todo: search 2 taxes without limit=1
+            line._onchange_quantity()
+            if line.seller_id and line.seller_id.product_supplier_info_vat_id:
+                tax = self.env['account.tax'].search(
+                    [('product_supplier_info_vat_id', '=', line.seller_id.product_supplier_info_vat_id.id),
+                     ('type_tax_use', '=', 'purchase')], limit=1)
+                line.update({'taxes_id': [(6, 0, tax.ids)]})

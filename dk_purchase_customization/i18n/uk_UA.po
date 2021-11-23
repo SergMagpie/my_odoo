@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-09 21:11+0000\n"
-"PO-Revision-Date: 2021-11-09 21:11+0000\n"
+"POT-Creation-Date: 2021-11-12 09:29+0000\n"
+"PO-Revision-Date: 2021-11-12 09:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,7 @@ msgstr "<strong>Ціна з ПДВ</strong>"
 #. module: dk_purchase_customization
 #: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
 msgid "<strong>Uom</strong>"
-msgstr "<strong>Од.вим</strong>"
+msgstr "<strong>Од.вим.</strong>"
 
 #. module: dk_purchase_customization
 #: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
@@ -166,6 +166,11 @@ msgid "Contact"
 msgstr "Контакт"
 
 #. module: dk_purchase_customization
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__contact_phone
+msgid "Contact phone number"
+msgstr ""
+
+#. module: dk_purchase_customization
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order__contract_id
 #: model_terms:ir.ui.view,arch_db:dk_purchase_customization.account_analytic_account_view_form_custom
 msgid "Contract"
@@ -211,16 +216,6 @@ msgid "Date start"
 msgstr "Дата закінчення"
 
 #. module: dk_purchase_customization
-#: model:ir.model.fields,help:dk_purchase_customization.field_account_analytic_account__deadline_fulfilling_application_by_supplier
-msgid "Deadline for fulfilling the application by the supplier in days"
-msgstr ""
-
-#. module: dk_purchase_customization
-#: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__deadline_fulfilling_application_by_supplier
-msgid "Deadline fulfilling application by supplier"
-msgstr "Термін виконання заявки постачальником у днях"
-
-#. module: dk_purchase_customization
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_account_analytic_account__delivery_schedule_id
 msgid "Delivery schedule"
 msgstr "Розклад доставки"
@@ -241,6 +236,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__display_name
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr "Відобразити назву"
 
@@ -271,6 +267,7 @@ msgstr "Повне ім'я"
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner__id
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule__id
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse__id
 msgid "ID"
 msgstr "Ідентифікатор"
 
@@ -296,6 +293,7 @@ msgstr "Є основним договором"
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_purchase_order_line____last_update
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_res_partner____last_update
 #: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_rule____last_update
+#: model:ir.model.fields,field_description:dk_purchase_customization.field_stock_warehouse____last_update
 msgid "Last Modified on"
 msgstr "Останні зміни на"
 
@@ -320,7 +318,7 @@ msgid ""
 "Note:<br/>\n"
 "                Warehouse schedule:"
 msgstr ""
-"Note:<br/>\n"
+"Примітка:<br/>\n"
 "                Графік роботи складу:"
 
 #. module: dk_purchase_customization
@@ -430,6 +428,11 @@ msgid "Total names"
 msgstr "Всього найменувань"
 
 #. module: dk_purchase_customization
+#: model_terms:ir.ui.view,arch_db:dk_purchase_customization.purchase_order_inherited_form
+msgid "Unit Price VAT"
+msgstr ""
+
+#. module: dk_purchase_customization
 #: model:ir.model.fields,help:dk_purchase_customization.field_purchase_order__use_vendor_currency_rate
 msgid "Use vendor currency rate"
 msgstr "Використовуйте курс валюти постачальника"
@@ -467,4 +470,4 @@ msgstr "Ставка продавця"
 #. module: dk_purchase_customization
 #: model_terms:ir.ui.view,arch_db:dk_purchase_customization.dk_report_purchase_template_document
 msgid "from"
-msgstr "від "
+msgstr "від"

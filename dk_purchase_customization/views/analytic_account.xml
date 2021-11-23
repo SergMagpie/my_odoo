@@ -34,7 +34,6 @@
                                     <field name="schedule_id"/>
                                     <field name="order_schedule_id"/>
                                     <field name="delivery_schedule_id"/>
-                                    <field name="deadline_fulfilling_application_by_supplier"/>
                                 </group>
                             </group>
                         </page>

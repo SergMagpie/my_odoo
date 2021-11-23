@@ -36,7 +36,7 @@
                     Bank account: <span t-esc="bank.acc_number"/><br/>
                 </div>
             </div>
-            <p>Supply agreement: <span t-field="o.contract_id"/></p>
+            <p>Supply agreement: <span t-field="o.contract_id.name"/></p>
             <div class="row">
                 <div>
                     <strong>Warehouse: </strong>
@@ -160,12 +160,13 @@
                           t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                 </p>
                 <p>From the supplier: ____________________</p>
-                <p>From the buyer: <span t-field="o.user_id.name"/>, position <span
-                        t-field="o.user_id.partner_id.function"/></p>
+                <p>From the buyer: <span t-field="o.user_id.name"/><br/>
+                Position <span
+                        t-field="o.user_position_id.job_title"/></p>
                 Note:<br/>
                 Warehouse schedule: <span t-field="o.picking_type_id.warehouse_id.calendar_id.name"/><br/>
-                Contact person: <span t-field="o.picking_type_id.warehouse_id.default_user_id.name"/><br/>
-                Contact number: <span t-field="o.picking_type_id.warehouse_id.default_user_id.partner_id.phone"/><br/>
+                Contact person: <span t-field="o.picking_type_id.warehouse_id.warehouse_manager_id.name"/><br/>
+                Contact number: <span t-field="o.picking_type_id.warehouse_id.contact_phone"/><br/>
 
                 <p t-field="o.notes"/>
                 <div class="oe_structure"/>
