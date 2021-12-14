@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report-->
+<odoo>
+    <data>
+
+        <template id="lot_input_raw_materials_label">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="lot">
+                    <t t-call="stock_production_lot_printout.input_raw_materials_document">
+                        <t t-set="product" t-value="lot.product_id"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+<!--        <template id="input_raw_materials_document">-->
+<!--            <style type="text/css">-->
+<!--                .container {-->
+<!--                padding: 1px !important;-->
+<!--                }-->
+<!--            </style>-->
+<!--            <div class="page">-->
+<!--                <div class="irm_table_container">-->
+<!--                    <div class="irm_table_div irm_first_row">-->
+<!--                        <div class="irm_cell irm_lot_name_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span t-esc="lot.name" class="irm_lot_name_span"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class=" irm_cell irm_product_name_div">-->
+<!--                            <div class="irm_limitation_container_product">-->
+<!--                                <t t-if="product">-->
+<!--                                    <span t-esc="product.name" class="irm_product_name_span"/>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_temperature_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_temperature_span">-->
+<!--                                    -18 &lt;!&ndash;TODO: Plug. New field in stock.production.lot (Temperature)&ndash;&gt;-->
+<!--                                </span>-->
+<!--                                <span class="irm_temperature_span">-->
+<!--                                    ⁰С-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="irm_table_div irm_second_row">-->
+<!--                        <div class="irm_cell irm_suitable_label_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_suitable_label_span">-->
+<!--                                    Suitable for-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_suitable_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <t t-if="lot.expiration_date">-->
+<!--                                    <span t-esc="lot.expiration_date.strftime('%d.%m.%Y')" class="irm_suitable_span"/>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_day_label_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_day_label_span">-->
+<!--                                    Day-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_day_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_day_span">-->
+<!--                                    176 &lt;!&ndash;TODO: Plug for Number of day&ndash;&gt;-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="irm_table_div irm_third_row">-->
+<!--                        <div class="irm_cell irm_qty_label_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_qty_label_span">-->
+<!--                                    Qty., units-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_qty_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_qty_span">-->
+<!--                                    12 &lt;!&ndash;TODO: Plug for Quantity, units&ndash;&gt;-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_weight_label_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_weight_label_span">-->
+<!--                                    Weight, kg-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_weight_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_weight_span">-->
+<!--                                    23,541 &lt;!&ndash;TODO: Plug for Net weight, kg&ndash;&gt;-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="irm_table_div irm_fourth_row">-->
+<!--                        <div class="irm_cell irm_batch_number_label_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_batch_number_label_span">-->
+<!--                                    Batch number-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="irm_cell irm_batch_number_div">-->
+<!--                            <div class="irm_limitation_container">-->
+<!--                                <span class="irm_batch_number_span">-->
+<!--                                    986732108 від 15.06.2021 &lt;!&ndash;TODO: Plug for Batch number&ndash;&gt;-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="irm_table_div irm_fifth_row">-->
+<!--                        <t t-if="product.barcode">-->
+<!--                            <div class="irm_code_img_div">-->
+<!--                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;' % ('Code128', product.barcode, 222, 37)" alt="Barcode"/>-->
+<!--                                <span t-esc="product.barcode"/>-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <p style="page-break-after:always"></p>-->
+<!--        </template>-->
+
+
+        <template id="input_raw_materials_document">
+            <style type="text/css">
+                .container {
+                padding: 1px !important;
+                }
+            </style>
+            <div class="page">
+                <div class="table_container">
+                    <div class="table_div first_level">
+                        <div class="number td height_limit_big width_limit_lot">
+                            <span t-esc="lot.ref" class="table_span font_weight_bold_span font_size_span center_value font_size_lot_name"/>
+                        </div>
+                        <div class="name td">
+                            <div class="name_container">
+                                <t t-if="product">
+                                    <div class="irm_height_limitation">
+                                        <span t-esc="product.name" class="table_span font_weight_bold_span product_width_limit center_value"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="temperature td">
+                            <div class="temperature_container height_limit_big width_limit_content">
+                                <t t-if="lot.store_at_temperature">
+                                    <span class="table_span font_weight_bold_span font_size_temperature">
+                                        <span t-esc="lot.store_at_temperature"/>
+                                        <span>⁰С</span>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table_div second_line">
+                        <div class="label_div td">
+                            <span class="table_span">Suitable for</span>
+                        </div>
+                        <div class="date_div td height_limit_small width_limit_content">
+                            <t t-if="lot.expiration_date">
+                                <span t-esc="lot.expiration_date.strftime('%d.%m.%Y')" class="table_span"/>
+                            </t>
+                        </div>
+                        <div class="label_day_div td">
+                            <span class="table_span">
+                                Day
+                            </span>
+                        </div>
+                        <div class="data_div td height_limit_small width_limit_content">
+                            <t t-if="lot.day_number">
+                                <span t-esc="lot.day_number" class="table_span font_weight_bold_span font_size_span right_value"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="table_div third_line">
+                        <div class="label_div td">
+                            <span class="table_span">
+                                Qty., units
+                            </span>
+                        </div>
+                        <div class="date_div td height_limit_small width_limit_content">
+                            <t t-if="lot.quantity">
+                                <span t-esc="lot.quantity" class="table_span"/>
+                            </t>
+                        </div>
+                        <div class="label_day_div td">
+                            <span class="label_name table_span">
+                                Weight, kg
+                            </span>
+                        </div>
+                        <div class="data_div td height_limit_small width_limit_content">
+                            <t t-if="lot.net_weight">
+                                <span t-esc="lot.net_weight" class="table_span font_weight_bold_span font_size_span right_value"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="table_div fourth_line">
+                        <div class="label_div td">
+                            <span class="table_span">
+                                Batch number
+                            </span>
+                        </div>
+                        <div class="batch_number_div_value td height_limit_small width_limit_butch_number">
+                            <span class="table_span batch_number_height">
+                                <t t-if="lot.name">
+                                    <span t-esc="lot.name"/>
+                                </t>
+                                <t t-if="lot.batch_from_date">
+                                    <span>from </span>
+                                    <span t-esc="lot.batch_from_date.strftime('%d.%m.%Y')"/>
+                                </t>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="table_div table_code_div">
+                        <t t-if="product.barcode">
+                            <div class="code_img_div">
+                                <span>
+                                    <img t-att-src="'/report/dk-barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;' % ('Code128', product.barcode, 212, 35)" alt="Barcode"/>
+                                </span>
+                                <span t-esc="product.barcode" class="barcode_number"/>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <p style="page-break-after:always"></p>
+        </template>
+
+    </data>
+</odoo>

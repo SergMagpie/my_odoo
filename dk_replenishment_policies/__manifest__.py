@@ -1,0 +1,30 @@
+{
+    'name': 'DK Replenishment Policies',
+    'summary': """DK Replenishment Policies""",
+    'category': 'Warehouse Management',
+    'author': 'Simbioz',
+    'maintainer': 'Simbioz Holding',
+    'website': 'https://simbioz.ua',
+    'version': '14.0.1.0.2',
+    'license': 'LGPL-3',
+    'depends': [
+        'stock',
+        'dk_stock_buffer',
+    ],
+    'images': [],
+    'external_dependencies': {
+        'python': [],
+        'bin': [],
+    },
+    'data': [
+        'security/ir.model.access.csv',
+        'data/ir_cron.xml',
+        'views/replenishment_policies.xml',
+        'views/stock_warehouse_orderpoint_view.xml',
+    ],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

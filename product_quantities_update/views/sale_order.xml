@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherited" model="ir.ui.view">
+            <field name="name">view_order_form_inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='order_line']" position="after">
+                    <button name="calculate_and_update_europe_quantities" type="object" string="Update Date Planned" class="btn-primary"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

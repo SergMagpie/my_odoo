@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_product_template_form_inherit_quantities_update" model="ir.ui.view">
+        <field name="name">view.product.template.form.inherit.quantities.update</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='packaging']" position="before">
+                <group string="Quantities in Europe">
+                    <field name="quantity_Italy" string="Quantity in Italy" readonly="1"/>
+                    <field name="quantity_Romania" string="Quantity in Romania" readonly="1"/>
+                    <field name="quantity_Switzerland" string="Quantity in Switzerland" readonly="1"/>
+                    <button name="get_europe_quantities"
+                            class="btn-primary"
+                            icon="fa-download"
+                            type="object"
+                            string="Update quantities"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

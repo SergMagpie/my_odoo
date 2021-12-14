@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_replenishment_policies_tree" model="ir.ui.view">
+        <field name="name">stock.replenishment.policies.tree</field>
+        <field name="model">stock.replenishment.policies</field>
+        <field name="arch" type="xml">
+            <tree string="Stock replenishment policies">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="control_method"/>
+                <field name="warehouse_id" options="{'no_create': True}"/>
+                <field name="location_id" options="{'no_create': True}"/>
+                <field name="product_category_id" options="{'no_create': True}"/>
+                <field name="product_id" options="{'no_create': True}"/>
+                <field name="begin_date"/>
+                <field name="end_date"/>
+                <field name="increase_trigger"/>
+                <field name="increase_factor"/>
+                <field name="decrease_trigger"/>
+                <field name="decrease_factor"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_replenishment_policies_form" model="ir.ui.view">
+        <field name="name">stock.replenishment.policies.form</field>
+        <field name="model">stock.replenishment.policies</field>
+        <field name="arch" type="xml">
+            <form string="Stock replenishment policies">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_orderpoints" class="oe_stat_button" icon="fa-list">
+                            <field name="orderpoints_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="control_method"/>
+                        <field name="warehouse_id" options="{'no_create': True}"/>
+                        <field name="location_id" options="{'no_create': True}"/>
+                        <field name="product_category_id" options="{'no_create': True}"/>
+                        <field name="product_id" options="{'no_create': True}"/>
+                        <field name="begin_date"/>
+                        <field name="end_date"/>
+                        <field name="increase_trigger"/>
+                        <field name="increase_factor"/>
+                        <field name="decrease_trigger"/>
+                        <field name="decrease_factor"/>
+                    </group>
+                    <notebook name="history">
+                        <page name="action_history_ids" string="History of actions">
+                            <field name="action_history_ids">
+                                <tree name="action_history_ids" editable="bottom">
+                                    <field name="policies_id" invisible="1"/>
+                                    <field name="response_time"/>
+                                    <field name="user_id"/>
+                                    <field name="applied_action"/>
+                                    <field name="buffer_zone"/>
+                                    <field name="stock_warehouse_orderpoint_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="trigger_history_ids" string="History of triggers">
+                            <field name="trigger_history_ids">
+                                <tree name="trigger_history_ids" editable="bottom">
+                                    <field name="policies_id" invisible="1"/>
+                                    <field name="stock_warehouse_orderpoint_id"/>
+                                    <field name="response_date"/>
+                                    <field name="buffer_zone"/>
+                                    <field name="duration"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_replenishment_policies" model="ir.actions.act_window">
+        <field name="name">Stock replenishment policies</field>
+        <field name="res_model">stock.replenishment.policies</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No stock replenishment policies found. Let's create one!
+            </p>
+            <p>
+                Create new stock replenishment policies.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_replenishment_policies"
+              name="Stock replenishment policies"
+              parent="stock.menu_warehouse_config"
+              action="action_replenishment_policies"
+              sequence="10"/>
+</odoo>

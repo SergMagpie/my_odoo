@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_replenishment_policies" model="ir.cron">
+            <field name="name">Replenishment policies: compute activity</field>
+            <field name="model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_replenishment_policies()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>

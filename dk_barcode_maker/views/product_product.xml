@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_product_form_inherit" model="ir.ui.view">
+            <field name="name">view_product_form_inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="barcode_image" widget="image" attrs="{'invisible': [('barcode','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_warehouse_orderpoint_tree_editable" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.tree.editable.custom</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="after">
+                    <field name="stock_replenishment_policies_id" readonly="1"/>
+                </field>
+                <button name="action_replenish_auto" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('qty_to_order', '&lt;', 1.0), ('trigger', '=', 'auto'), '!',('stock_replenishment_policies_id', '=', False)]}</attribute>
+                </button>
+                <button name="action_replenish" position="after">
+                    <button name="reject_recommendations"
+                            class="o_replenish_buttons"
+                            type="object"
+                            string="Reject recommendations"
+                            icon="fa-thumbs-o-down"
+                            attrs="{'invisible': ['|','&amp;',('can_increase_buffer', '=', False),('can_decrease_buffer', '=', False),('stock_replenishment_policies_id', '=', False)]}"/>
+                </button>
+            </field>
+        </record>
+        <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="stock_replenishment_policies_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

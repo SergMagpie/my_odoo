@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Custom report-->
+<odoo>
+    <data>
+
+        <template id="lot_passport_series_label">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="lot">
+                    <t t-call="stock_production_lot_printout.passport_series_label_document">
+                        <t t-set="product" t-value="lot.product_id"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="passport_series_label_document">
+            <div class="page">
+                <table id="passport_series_label" class="table">
+                    <tbody>
+                        <tr>
+                            <td width="20%" class="ps_lot_name">
+                                <span t-esc="lot.ref"/>
+                            </td>
+                            <td colspan="5" width="65%" class="ps_product_name">
+                                <t t-if="product">
+                                    <span t-esc="product.name"/>
+                                </t>
+                            </td>
+                            <td width="15%" class="ps_temperature">
+                                <t t-if="lot.store_at_temperature">
+                                    <span>
+                                        <span t-esc="lot.store_at_temperature"/>
+                                    </span>
+                                    <span>⁰С</span>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="25%" class="ps_field_names">
+                                Provider
+                            </td>
+                            <td colspan="5" width="75%" class="ps_provider">
+                                <t t-if="lot.provider_name">
+                                    <span t-esc="lot.provider_name"/>
+                                </t>
+                                <t t-if="lot.provider_code">
+                                    <span>, code </span>
+                                    <span t-esc="lot.provider_code"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="25%" class="ps_field_names">
+                                Delivery date
+                            </td>
+                            <td colspan="2" width="28%" class="ps_delivery_date">
+                                <t t-if="lot.delivery_date">
+                                    <span t-esc="lot.delivery_date.strftime('%d.%m.%Y %H:%M:%S')"/>
+                                </t>
+                            </td>
+                            <td width="20%" class="ps_field_names">
+                                Inc. document
+                            </td>
+                            <td colspan="2" width="27%" class="ps_inc_document">
+                                <t t-if="lot.document_number">
+                                    <span>№ </span>
+                                    <span t-esc="lot.document_number"/>
+                                </t>
+                                <t t-if="lot.document_date">
+                                    <br/>
+                                    <span>from </span>
+                                    <span t-esc="lot.document_date.strftime('%d.%m.%Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="25%" class="ps_field_names">
+                                Warehouse, address
+                            </td>
+                            <td colspan="5" width="75%" class="ps_address">
+                                <t t-if="lot.warehouse_address">
+                                    <span t-esc="lot.warehouse_address"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%" class="ps_field_names">
+                                Batch number
+                            </td>
+                            <td colspan="3" width="33%" class="ps_batch_number">
+                                <t t-if="lot.name">
+                                    <span t-esc="lot.name"/>
+                                </t>
+                                <t t-if="lot.batch_from_date">
+                                    <span>from </span>
+                                    <span t-esc="lot.batch_from_date.strftime('%d.%m.%Y')"/>
+                                </t>
+                            </td>
+                            <td width="20%" class="ps_field_names">
+                                Suitable for
+                            </td>
+                            <td colspan="2" width="27%" class="ps_suitable_for">
+                                <t t-if="lot.expiration_date">
+                                    <span t-esc="lot.expiration_date.strftime('%d.%m.%Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="25%" class="ps_field_names">
+                                Palette
+                            </td>
+                            <td width="14%" class="ps_palette">
+                                <t t-if="lot.palette_qty">
+                                    <span t-esc="lot.palette_qty"/>
+                                </t>
+                            </td>
+                            <td width="14%" class="ps_field_names">
+                                Units
+                            </td>
+                            <td width="20%" class="ps_field_names">
+                                Net weight, kg
+                            </td>
+                            <td colspan="2" width="27%" class="ps_weight">
+                                <t t-if="lot.net_weight">
+                                    <span t-esc="lot.net_weight"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" width="25%" class="ps_field_names">
+                                Box
+                            </td>
+                            <td width="14%" class="ps_box">
+                                <t t-if="lot.box_qty">
+                                    <span t-esc="lot.box_qty"/>
+                                </t>
+                            </td>
+                            <td width="14%" class="ps_field_names">
+                                Units
+                            </td>
+                            <td width="20%" class="ps_field_names">
+                                Quantity, units
+                            </td>
+                            <td colspan="27" width="25%" class="ps_quantity">
+                                <t t-if="lot.quantity">
+                                    <span t-esc="lot.quantity"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" width="100%" class="ps_barcode_td">
+                                <div class="ps_barcode_vals">
+                                    <t t-if="product.barcode">
+                                        <img t-att-src="'/report/dk-barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;' % ('Code128', product.barcode, 600, 100)" alt="Barcode"/>
+                                        <br/>
+                                        <span t-esc="product.barcode"/>
+                                    </t>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="page-break-after:always"></p>
+        </template>
+
+    </data>
+</odoo>
