@@ -8,17 +8,20 @@
             <field name="arch" type="xml">
                 <field name="location_id" position="after">
                     <field name="stock_replenishment_policies_id" readonly="1"/>
+                    <field name="polices_control_method" invisible="1"/>
                 </field>
-                <button name="action_replenish_auto" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', '|', ('qty_to_order', '&lt;', 1.0), ('trigger', '=', 'auto'), '!',('stock_replenishment_policies_id', '=', False)]}</attribute>
-                </button>
+<!--                <button name="action_replenish_auto" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': ['|', '|', ('qty_to_order', '&lt;', 1.0), ('trigger', '=', 'auto'), '!',('stock_replenishment_policies_id', '=', False)]}</attribute>-->
+<!--                </button>-->
                 <button name="action_replenish" position="after">
                     <button name="reject_recommendations"
                             class="o_replenish_buttons"
                             type="object"
                             string="Reject recommendations"
                             icon="fa-thumbs-o-down"
-                            attrs="{'invisible': ['|','&amp;',('can_increase_buffer', '=', False),('can_decrease_buffer', '=', False),('stock_replenishment_policies_id', '=', False)]}"/>
+                            attrs="{'invisible': ['|','|','&amp;',('can_increase_buffer', '=', False),('can_decrease_buffer', '=', False),
+                            ('stock_replenishment_policies_id', '=', False),
+                            ('polices_control_method', '=', 'automatic')]}"/>
                 </button>
             </field>
         </record>
@@ -29,6 +32,28 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="stock_replenishment_policies_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="dk_stock_buffer_view_warehouse_orderpoint_tree_editable_inherit" model="ir.ui.view">
+            <field name="name">dk_stock_buffer_view_warehouse_orderpoint_tree_editable_inherit</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="dk_stock_buffer.view_warehouse_orderpoint_tree_editable"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='increase_buffer_value']" position="before">
+                    <field name="polices_control_method" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='increase_buffer_value']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': ['|', '|', ('is_buffer', '=', False),
+                                      ('can_increase_buffer', '=', False),
+                                      ('polices_control_method', '=', 'automatic')]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='decrease_buffer_value']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': ['|', '|', ('is_buffer', '=', False),
+                                      ('can_decrease_buffer', '=', False),
+                                      ('polices_control_method', '=', 'automatic')]}</attribute>
                 </xpath>
             </field>
         </record>

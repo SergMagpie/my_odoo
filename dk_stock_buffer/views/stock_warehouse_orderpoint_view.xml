@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_warehouse_orderpoint_tree_editable" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.tree.editable.custom</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="after">
+                    <field name="is_buffer"/>
+                    <field name="buffer_value" attrs="{'readonly': [('is_buffer', '=', False)]}"/>
+                    <field name="buffer_yellow_zone" readonly="1"/>
+                    <field name="buffer_red_zone" readonly="1"/>
+                    <field name="buffer_critical_zone" readonly="1" optional="hide"/>
+                    <field name="buffer_change_date" optional="hide"/>
+                    <field name="can_increase_buffer" invisible="1"/>
+                    <field name="can_decrease_buffer" invisible="1"/>
+                    <field name="critical_zone_period" optional="hide"/>
+                    <field name="green_zone_period" optional="hide"/>
+                </field>
+                <field name="product_min_qty" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_buffer', '=', 'True')]}</attribute>
+                    <attribute name="optional">hide</attribute>
+                </field>
+                <field name="product_max_qty" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_buffer', '=', 'True')]}</attribute>
+                    <attribute name="optional">hide</attribute>
+                </field>
+                <button name="action_replenish" position="after">
+                    <button name="increase_buffer_value" class="o_replenish_buttons" type="object" string="Increase buffer" icon="fa-arrow-up" attrs="{'invisible': ['|',('is_buffer', '=', False),('can_increase_buffer', '=', False)]}"/>
+                    <button name="decrease_buffer_value" class="o_replenish_buttons" type="object" string="Decrease buffer" icon="fa-arrow-down" attrs="{'invisible': ['|',('is_buffer', '=', False),('can_decrease_buffer', '=', False)]}"/>
+                </button>
+                <tree position="attributes">
+                    <attribute name="editable"></attribute>
+                    <attribute name="decoration-info">qty_on_hand &gt; buffer_value and is_buffer</attribute>
+                    <attribute name="decoration-success">buffer_yellow_zone &lt; qty_on_hand &lt;= buffer_value and is_buffer</attribute>
+                    <attribute name="decoration-warning">buffer_red_zone &lt; qty_on_hand &lt;= buffer_yellow_zone and is_buffer</attribute>
+                    <attribute name="decoration-danger">0 &lt; qty_on_hand &lt;= buffer_red_zone and is_buffer</attribute>
+                </tree>
+            </field>
+        </record>
+        <record id="view_warehouse_orderpoint_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.form</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="is_buffer"/>
+                    <field name="buffer_value" attrs="{'readonly': [('is_buffer', '=', False)]}"/>
+                    <field name="buffer_yellow_zone" readonly="1"/>
+                    <field name="buffer_red_zone" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="replenishment_time_days"/>
+                </xpath>
+                <sheet position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field
+                                name="message_ids"
+                                widget="mail_thread"
+                        />
+                    </div>
+                </sheet>
+            </field>
+        </record>
+
+        <record id="stock.action_orderpoint_replenish" model="ir.actions.act_window">
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="stock_reorder_report_search_inherit" model="ir.ui.view">
+            <field name="name">stock.warehouse.orderpoint.reorder.search.inherit</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.stock_reorder_report_search"/>
+            <field name="arch" type="xml">
+                <filter name="filter_not_snoozed" position="after">
+                    <field name="is_red_zone"/>
+                    <field name="is_yellow_zone"/>
+                    <field name="is_green_zone"/>
+                    <field name="is_buffer"/>
+                    <field name="can_increase_buffer"/>
+                    <field name="can_decrease_buffer"/>
+                    <filter string="Red zone" name="filter_red_zone"
+                            domain="[('is_red_zone', '=', True)]"/>
+                    <filter string="Yellow zone" name="filter_yellow_zone"
+                            domain="[('is_yellow_zone', '=', True)]"/>
+                    <filter string="Green zone" name="filter_green_zone"
+                            domain="[('is_green_zone', '=', True)]"/>
+                    <separator/>
+                    <filter name="filter_increase_buffer" string="Increase buffer" domain="[('can_increase_buffer', '=', True)]"/>
+                    <filter name="filter_decrease_buffer" string="Decrease buffer" domain="[('can_decrease_buffer', '=', True)]"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="action_set_triggers_manual" model="ir.actions.server">
+            <field name="name">Set orderpoint triggers manual</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+            <field name="binding_view_types">list</field>
+            <field name="binding_type">action</field>
+            <field name="code">records.action_set_triggers_manual_auto('manual')</field>
+        </record>
+        <record id="action_update_doc_type" model="ir.actions.server">
+            <field name="name">Set orderpoint triggers auto</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+            <field name="type">ir.actions.server</field>
+            <field name="binding_model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+            <field name="binding_view_types">list</field>
+            <field name="binding_type">action</field>
+            <field name="code">records.action_set_triggers_manual_auto('auto')</field>
+        </record>
+    </data>
+</odoo>

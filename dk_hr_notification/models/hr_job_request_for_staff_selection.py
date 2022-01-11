@@ -29,15 +29,15 @@ class HrJobRequestForStaffSelection(models.Model):
         rec = super(HrJobRequestForStaffSelection, self).create(vals)
 
         template_values = {
-            'first_name': rec.request_initiator.firstname or '',
-            'last_name': rec.request_initiator.lastname or '',
-            'job_title': rec.request_initiator.job_title or '',
+            'first_name': rec.request_initiator_id.firstname or '',
+            'last_name': rec.request_initiator_id.lastname or '',
+            'job_title': rec.request_initiator_id.job_title or '',
             'display_name': rec.job_id.display_name or '',
             'vacancies_count': rec.vacancies_count or 0,
         }
         rec.send_notification_mail(
             template_name='selection_request_is_open',
-            email_from=[rec.request_initiator.work_email],
+            email_from=[rec.request_initiator_id.work_email],
             template_values=template_values)
         return rec
 
@@ -54,7 +54,7 @@ class HrJobRequestForStaffSelection(models.Model):
             }
             self.send_notification_mail(
                 template_name='selection_request_denied',
-                email_to=[self.request_initiator.work_email],
+                email_to=[self.request_initiator_id.work_email],
                 template_values=template_values)
 
     def set_closed(self):
@@ -68,7 +68,7 @@ class HrJobRequestForStaffSelection(models.Model):
                 }
                 self.send_notification_mail(
                     template_name='vacancy_is_removed',
-                    email_to=[self.request_initiator.work_email],
+                    email_to=[self.request_initiator_id.work_email],
                     template_values=template_values)
             elif self.reason_for_closing == 'filled':
                 template_values = {
@@ -77,8 +77,8 @@ class HrJobRequestForStaffSelection(models.Model):
                     'date_of_employment': self.date_of_employment or '',
                 }
                 recipients = [
-                    self.request_initiator.work_email,
-                    self.request_initiator.parent_id.work_email,
+                    self.request_initiator_id.work_email,
+                    self.request_initiator_id.parent_id.work_email,
                 ]
                 self.send_notification_mail(
                     template_name='job_offer_is_signed',

@@ -15,7 +15,7 @@ class Job(models.Model):
                     'user_name': self.user_id.display_name or '',
                 }
                 recipients = [
-                    job_request.request_initiator.work_email,
+                    job_request.request_initiator_id.work_email,
                     self.user_id.email,
                 ]
                 job_request.send_notification_mail(
@@ -32,7 +32,7 @@ class Job(models.Model):
                     'action_date': fields.Date.today()
                 }
                 recipients = [
-                    job_request.request_initiator.work_email,
+                    job_request.request_initiator_id.work_email,
                     self.user_id.email,
                     first_manager_mail,
                 ]
@@ -40,4 +40,6 @@ class Job(models.Model):
                     template_name='responsible_hr_manager_changed',
                     email_to=recipients,
                     template_values=template_values)
+        else:
+            result = super(Job, self).write(values)
         return result

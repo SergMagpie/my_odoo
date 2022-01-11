@@ -18,6 +18,8 @@
                 <field name="increase_factor"/>
                 <field name="decrease_trigger"/>
                 <field name="decrease_factor"/>
+                <field name="orderpoints_count"/>
+                <button type="object" name="action_view_orderpoints" class="oe_stat_button" icon="fa-list"/>
             </tree>
         </field>
     </record>
@@ -57,6 +59,8 @@
                                     <field name="applied_action"/>
                                     <field name="buffer_zone"/>
                                     <field name="stock_warehouse_orderpoint_id"/>
+                                    <field name="value_before"/>
+                                    <field name="value_after"/>
                                 </tree>
                             </field>
                         </page>

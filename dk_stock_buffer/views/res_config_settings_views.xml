@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.stock</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='operations_setting_container']" position="after">
+                    <h2>Replenishment</h2>
+                    <div class="row mt16 o_settings_container" name="stock_replenishment">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="green_zone_period"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."
+                                      aria-label="Values set here are company-specific."
+                                      groups="base.group_multi_company"/>
+<!--                                <div class="text-muted">-->
+<!--                                    Hours needed to confirm a PO, define when a PO should be validated-->
+<!--                                </div>-->
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <span>
+                                            <field name="green_zone_period" class="oe_inline"/>
+                                            hours
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="critical_zone_period"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."
+                                      aria-label="Values set here are company-specific."
+                                      groups="base.group_multi_company"/>
+<!--                                <div class="text-muted">-->
+<!--                                    Hours needed to confirm a PO, define when a PO should be validated-->
+<!--                                </div>-->
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <span>
+                                            <field name="critical_zone_period" class="oe_inline"/>
+                                            hours
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="buffer_change_period"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."
+                                      aria-label="Values set here are company-specific."
+                                      groups="base.group_multi_company"/>
+<!--                                <div class="text-muted">-->
+<!--                                    Days needed to confirm a PO, define when a PO should be validated-->
+<!--                                </div>-->
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <span>
+                                            <field name="buffer_change_period" class="oe_inline"/>
+                                            hours
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+{
+    'name': 'DK Stock Buffer',
+    'summary': """DK Stock Buffer""",
+    'category': 'Warehouse Management',
+    'author': 'Simbioz',
+    'maintainer': 'Simbioz Holding',
+    'website': 'https://simbioz.ua',
+    'version': '14.0.1.0.2',
+    'license': 'LGPL-3',
+    'depends': [
+        'analytic',
+        'stock',
+        'dk_purchase_customization',
+    ],
+    'images': [],
+    'external_dependencies': {
+        'python': [],
+        'bin': [],
+    },
+    'data': [
+        'data/ir_cron.xml',
+        'views/stock_warehouse_orderpoint_view.xml',
+        'views/res_config_settings_views.xml',
+        'views/resource_calendar.xml',
+    ],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

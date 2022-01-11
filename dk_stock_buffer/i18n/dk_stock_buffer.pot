@@ -1,0 +1,270 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* dk_stock_buffer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-17 16:14+0000\n"
+"PO-Revision-Date: 2021-11-17 16:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__is_buffer
+msgid "Buffer"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_channel_ids
+msgid "Followers (Channels)"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__id
+msgid "ID"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_needaction
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_error
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__product_max_qty
+msgid "Max Quantity"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__product_min_qty
+msgid "Min Quantity"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model,name:dk_stock_buffer.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.actions.server,name:dk_stock_buffer.ir_cron_orderpoint_Activity_ir_actions_server
+#: model:ir.cron,cron_name:dk_stock_buffer.ir_cron_orderpoint_Activity
+#: model:ir.cron,name:dk_stock_buffer.ir_cron_orderpoint_Activity
+msgid "Orderpoint activity"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__buffer_red_zone
+msgid "Red zone"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__buffer_value
+msgid "Start value"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__product_min_qty
+msgid ""
+"When the virtual stock equals to or goes below the Min Quantity specified "
+"for this field, Odoo generates a procurement to bring the forecasted "
+"quantity to the Max Quantity."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,help:dk_stock_buffer.field_stock_warehouse_orderpoint__product_max_qty
+msgid ""
+"When the virtual stock goes below the Min Quantity, Odoo generates a "
+"procurement to bring the forecasted quantity to the Quantity specified as "
+"Max Quantity."
+msgstr ""
+
+#. module: dk_stock_buffer
+#: model:ir.model.fields,field_description:dk_stock_buffer.field_stock_warehouse_orderpoint__buffer_yellow_zone
+msgid "Yellow zone"
+msgstr ""

@@ -76,4 +76,4 @@ class SendNotificationMail(models.AbstractModel):
 
         template_id['auto_delete'] = False
 
-        template_id.send_mail(self.id, force_send=True, raise_exception=True)
+        template_id.send_mail(self.id, force_send=True, raise_exception=False)

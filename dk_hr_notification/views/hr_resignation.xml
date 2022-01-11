@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_resignation_employee_resignation_form_inherit" model="ir.ui.view">
+            <field name="name">hr_resignation_employee_resignation_form_inherit</field>
+            <field name="model">hr.resignation</field>
+            <field name="inherit_id"
+                   ref="hr_resignation.employee_resignation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reason']/.." position="after">
+                    <group name="processing" string="Processing">
+                        <field name="cancel_resignation_reason"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

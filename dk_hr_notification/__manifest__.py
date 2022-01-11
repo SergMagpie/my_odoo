@@ -12,6 +12,9 @@
         'hr',
         'hr_recruitment',
         'simbioz_hr_job_request_for_staff_selection',
+        'simbioz_hr_job_employee_rotation',
+        'hr_resignation',
+        'dk_hr_customization',
     ],
     'images': [],
     'data': [
@@ -19,6 +22,7 @@
         'data/data_dk_notifications.xml',
         'views/hr_notification.xml',
         'views/hr_job_request_for_staff_selection_template.xml',
+        'views/hr_resignation.xml',
     ],
     'demo': [],
     'qweb': [],

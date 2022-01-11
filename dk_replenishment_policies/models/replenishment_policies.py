@@ -6,6 +6,7 @@ class ReplenishmentPolicies(models.Model):
     _name = 'stock.replenishment.policies'
     _description = 'Stock replenishment policies'
     _rec_name = 'name'
+    _order = 'sequence,name'
 
     name = fields.Char(
         string='Name replenishment police',
@@ -86,7 +87,7 @@ class ReplenishmentPolicies(models.Model):
         comodel_name='stock.warehouse.orderpoint',
         inverse_name='stock_replenishment_policies_id',
         string='Stock warehouse orderpoint',
-        store=True,
+        auto_join=True,
     )
 
     orderpoints_count = fields.Integer(
@@ -98,7 +99,7 @@ class ReplenishmentPolicies(models.Model):
     sequence = fields.Integer(string='Sequence')
 
     is_actual = fields.Boolean(
-        compute='compute_stock_warehouse_orderpoint_ids',
+        compute='compute_is_actual',
         store=True,
     )
 
@@ -112,27 +113,38 @@ class ReplenishmentPolicies(models.Model):
         action['domain'] = [('id', 'in', self.stock_warehouse_orderpoint_ids.ids)]
         return action
 
-    @api.depends('warehouse_id', 'location_id', 'product_category_id', 'product_id', 'sequence', 'begin_date',
-                 'end_date')
-    def compute_stock_warehouse_orderpoint_ids(self):
+    def compute_is_actual(self):
         for rec in self:
-            rec.is_actual = (rec.begin_date or date.today()
-                             ) <= date.today() <= (rec.end_date or date.today())
-            domain = rec.create_orderpoint_domain()
-            stock_warehouse_orderpoints = rec.env['stock.warehouse.orderpoint'].search(domain)
-            stock_warehouse_orderpoints.compute_stock_replenishment_policies_id()
+            rec.is_actual = (rec.begin_date or date.today()) <= date.today() <= (rec.end_date or date.today())
 
-    def create_orderpoint_domain(self):
-        domain = [('is_buffer', '=', True)]
-        if self.warehouse_id:
-            domain.append(('warehouse_id', '=', self.warehouse_id.id))
-        if self.location_id:
-            domain.append(('location_id', '=', self.location_id.id))
-        if self.product_category_id:
-            domain.append(('product_category_id', '=', self.product_category_id.id))
-        if self.product_id:
-            domain.append(('product_id', '=', self.product_id.id))
-        return domain
+    @api.model
+    def create(self, vals):
+        for number, policies in enumerate(self.search([]), start=2):
+            policies.sequence = number
+        rec = super(ReplenishmentPolicies, self).create(vals)
+        rec.sequence = 1
+        return rec
+
+    # @api.depends('warehouse_id', 'location_id', 'product_category_id', 'product_id', 'sequence', 'begin_date',
+    #              'end_date', 'is_actual')
+    # def compute_stock_warehouse_orderpoint_ids(self):
+    #     for rec in self:
+    #         rec.compute_is_actual()
+    #         domain = rec.create_orderpoint_domain()
+    #         stock_warehouse_orderpoints = rec.env['stock.warehouse.orderpoint'].search(domain)
+    #         stock_warehouse_orderpoints.compute_stock_replenishment_policies_id()
+    #
+    # def create_orderpoint_domain(self):
+    #     domain = [('is_buffer', '=', True)]
+    #     if self.warehouse_id:
+    #         domain.append(('warehouse_id', '=', self.warehouse_id.id))
+    #     if self.location_id:
+    #         domain.append(('location_id', '=', self.location_id.id))
+    #     if self.product_category_id:
+    #         domain.append(('product_category_id', '=', self.product_category_id.id))
+    #     if self.product_id:
+    #         domain.append(('product_id', '=', self.product_id.id))
+    #     return domain
 
 
 class ReplenishmentPoliciesActionHistory(models.Model):
@@ -150,6 +162,7 @@ class ReplenishmentPoliciesActionHistory(models.Model):
     )
 
     user_id = fields.Many2one(
+        comodel_name='res.users',
         string='User',
         default=lambda self: self.env.user,
     )
@@ -157,22 +170,28 @@ class ReplenishmentPoliciesActionHistory(models.Model):
     applied_action = fields.Selection([
         ('apply', 'Apply'),
         ('reject', 'Reject'),
-    ],
-        default=False,
-    )
+    ])
 
     buffer_zone = fields.Selection([
         ('is_green_zone', 'Is green zone'),
         ('is_red_zone', 'Is red zone'),
-    ],
-        default=False,
-    )
+    ])
 
     stock_warehouse_orderpoint_id = fields.Many2one(
         comodel_name='stock.warehouse.orderpoint',
         string='Stock warehouse orderpoint',
-        store=True,
     )
+
+    value_before = fields.Float(
+        digits=(16, 2),
+        string='Value before action',
+    )
+
+    value_after = fields.Float(
+        digits=(16, 2),
+        string='Value after action',
+    )
+
 
 class ReplenishmentPoliciesTriggerHistory(models.Model):
     _name = 'replenishment.policies.trigger.history'
@@ -191,14 +210,12 @@ class ReplenishmentPoliciesTriggerHistory(models.Model):
     buffer_zone = fields.Selection([
         ('is_green_zone', 'Is green zone'),
         ('is_red_zone', 'Is red zone'),
-    ],
-        default=False,
-    )
+    ])
 
     stock_warehouse_orderpoint_id = fields.Many2one(
         comodel_name='stock.warehouse.orderpoint',
         string='Stock warehouse orderpoint',
-        store=True,
+        # store=True,
     )
 
     duration = fields.Integer(

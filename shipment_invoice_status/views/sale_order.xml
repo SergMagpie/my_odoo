@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_shipment_invoice_status" model="ir.ui.view">
+            <field name="name">sale.order.shipment.invoice.status</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']/.." position="inside">
+                    <field name="shipment_status_so"/>
+                    <field name="invoice_status_so"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_shipment_invoice_status_tree_view" model="ir.ui.view">
+            <field name="name">sale.order.shipment.invoice.status.tree.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="shipment_status_so"/>
+                    <field name="invoice_status_so"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_shipment_invoice_status_search_view" model="ir.ui.view">
+            <field name="name">sale.order.shipment.invoice.status.search.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='activities_my']" position="after">
+                    <separator/>
+                    <filter name="shipment_status_so_not_shiped" string="Not Shipped" domain="[('shipment_status_so','=','not_shipped')]"/>
+                    <filter name="shipment_status_so_partially_shipped" string="Partially shipped" domain="[('shipment_status_so', '=', 'partially_shipped')]"/>
+                    <filter name="shipment_status_so_shipped_completely" string="Shipped completely" domain="[('shipment_status_so', '=', 'shipped_completely')]"/>
+                    <separator/>
+                    <filter name="invoice_status_so_not_paid" string="Not Paid" domain="[('invoice_status_so','=','not_paid')]"/>
+                    <filter name="invoice_status_so_partially_paid" string="Partially paid" domain="[('invoice_status_so','=','partially_paid')]"/>
+                    <filter name="invoice_status_so_paid" string="Paid" domain="[('invoice_status_so','=','paid')]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

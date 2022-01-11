@@ -12,6 +12,27 @@
                 $vacancies_count
             </field>
         </record>
+        <record id="hr_notification_resignation_request_is_open" model="hr.notification">
+            <field name="template_name">resignation_request_is_open</field>
+            <field name="name">Відкрито запит на звільення</field>
+            <field name="notification">
+                Відкрито запит на звільнення
+                $name
+                $job_title
+                $department_name з ініціативи
+                $resignation_type.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_request_is_open" model="hr.notification">
+            <field name="template_name">rotation_request_is_open</field>
+            <field name="name">Відкрито запит на ротацію</field>
+            <field name="notification">
+                Відкрито запит на ротацію
+                $name посада
+                $job_title
+                $department_name
+            </field>
+        </record>
         <record id="hr_notification_selection_request_denied" model="hr.notification">
             <field name="template_name">selection_request_denied</field>
             <field name="name">Відхилено запит на підбір</field>
@@ -21,10 +42,32 @@
                 $rejection_reason
             </field>
         </record>
+        <record id="hr_notification_rotation_request_denied" model="hr.notification">
+            <field name="template_name">rotation_request_denied</field>
+            <field name="name">Відхилено запит на ротацію</field>
+            <field name="notification">Запит на ротацію
+                $name відхилено в зв'язку з
+                $rejection_reason
+            </field>
+        </record>
         <record id="hr_notification_responsible_personnel_manager_has_been_appointed" model="hr.notification">
             <field name="template_name">responsible_personnel_manager_has_been_appointed</field>
             <field name="name">Призначено відповідального менеджера з персоналу</field>
             <field name="notification">Запит в роботі, призначено відповідального менедежера з персоналу
+                $user_name
+            </field>
+        </record>
+        <record id="hr_notification_resignation_manager_has_been_appointed" model="hr.notification">
+            <field name="template_name">resignation_recruiter_has_been_appointed</field>
+            <field name="name">Призначено відповідального менеджера з персоналу (звільнення)</field>
+            <field name="notification">Запит в роботі, призначено відповідального менедежера з персоналу
+                $user_name
+            </field>
+        </record>
+        <record id="hr_notification_rotation_recruiter_has_been_appointed" model="hr.notification">
+            <field name="template_name">rotation_recruiter_has_been_appointed</field>
+            <field name="name">Призначено відповідального менеджера з ротації персоналу</field>
+            <field name="notification">Запит в роботі, призначено відповідального менедежера з ротації персоналу
                 $user_name
             </field>
         </record>
@@ -36,11 +79,88 @@
                 $user_name
             </field>
         </record>
+        <record id="hr_notification_rotation_hr_manager_changed" model="hr.notification">
+            <field name="template_name">rotation_hr_manager_changed</field>
+            <field name="name">Змінено відповідального менеджера з ротації персоналу</field>
+            <field name="notification">Переназначено відповідального менедежера з ротації персоналу, з
+                $action_date відповідальний менеджер з персоналу
+                $user_name
+            </field>
+        </record>
+        <record id="hr_notification_resignation_hr_manager_changed" model="hr.notification">
+            <field name="template_name">resignation_hr_manager_changed</field>
+            <field name="name">Змінено відповідального менеджера зі звільнення персоналу</field>
+            <field name="notification">Переназначено відповідального менедежера з персоналу, з
+                $action_date відповідальний менеджер з персоналу
+                $user_name
+            </field>
+        </record>
         <record id="hr_notification_vacancy_is_removed" model="hr.notification">
             <field name="template_name">vacancy_is_removed</field>
             <field name="name">Закрито запит на підбір - знята вакансія</field>
             <field name="notification">Запит на підбір по вакансії
                 $display_name закритий. Причина: Замовник зняв вакансію.
+            </field>
+        </record>
+        <record id="hr_notification_resignation_is_cancel_remains" model="hr.notification">
+            <field name="template_name">resignation_is_cancel_remains</field>
+            <field name="name">Закрито запит на звільнення - працівник залишається</field>
+            <field name="notification">Запит на звільнення
+                $name закритий. Причина: Працівник залишається працювати в компанії.
+            </field>
+        </record>
+        <record id="hr_notification_resignation_is_cancel_fired" model="hr.notification">
+            <field name="template_name">resignation_is_cancel_fired</field>
+            <field name="name">Закрито запит на звільнення - працівник звільнений</field>
+            <field name="notification">Запит на звільнення
+                $name закритий. Причина: Працівник звільнений, всі підзадачі по звільненню виконані.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_closed_refused" model="hr.notification">
+            <field name="template_name">rotation_is_closed_refused</field>
+            <field name="name">Закрито запит на ротацію - Працівник відмовився від ротації</field>
+            <field name="notification">Запит на ротацію
+                $name закритий. Причина: Працівник відмовився від ротації.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_closed_head_refused" model="hr.notification">
+            <field name="template_name">rotation_is_closed_head_refused</field>
+            <field name="name">Закрито запит на ротацію - Керівник відмовився від ротації</field>
+            <field name="notification">Запит на ротацію
+                $name закритий. Причина: Керівник відмовився від ротації.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_closed_reserve" model="hr.notification">
+            <field name="template_name">rotation_is_closed_reserve</field>
+            <field name="name">Закрито запит на ротацію - Управлінський кадровий резерв</field>
+            <field name="notification">Запит на ротацію
+                $name закритий. Причина: працівника внесено в списки на відбір в Управлінський кадровий резерв.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_closed_rotation" model="hr.notification">
+            <field name="template_name">rotation_is_closed_rotation</field>
+            <field name="name">Закрито запит на ротацію - Вакансії відсутні</field>
+            <field name="notification">Запит на ротацію
+                $name закритий. Причина: вакансії відсутні, кандидата внесено в списки на Ротацію.
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_closed_transferred" model="hr.notification">
+            <field name="template_name">rotation_is_closed_transferred</field>
+            <field name="name">Закрито запит на ротацію - Працівник переведений</field>
+            <field name="notification">Запит на ротацію
+                $name закритий. Причина:
+                $name переведений на
+                $desired_job
+                $desired_department .
+            </field>
+        </record>
+        <record id="hr_notification_rotation_is_approval" model="hr.notification">
+            <field name="template_name">rotation_is_approval</field>
+            <field name="name">Погоджено ротацію</field>
+            <field name="notification">Запит на ротацію
+                $name погоджено керівником ротацію на вакансію:
+                $desired_job
+                $desired_department .
             </field>
         </record>
         <record id="hr_notification_job_offer_is_signed" model="hr.notification">
