@@ -42,14 +42,14 @@
                 $rejection_reason
             </field>
         </record>
-        <record id="hr_notification_rotation_request_denied" model="hr.notification">
-            <field name="template_name">rotation_request_denied</field>
-            <field name="name">Відхилено запит на ротацію</field>
-            <field name="notification">Запит на ротацію
-                $name відхилено в зв'язку з
-                $rejection_reason
-            </field>
-        </record>
+<!--        <record id="hr_notification_rotation_request_denied" model="hr.notification">-->
+<!--            <field name="template_name">rotation_request_denied</field>-->
+<!--            <field name="name">Відхилено запит на ротацію</field>-->
+<!--            <field name="notification">Запит на ротацію-->
+<!--                $name відхилено в зв'язку з-->
+<!--                $rejection_reason-->
+<!--            </field>-->
+<!--        </record>-->
         <record id="hr_notification_responsible_personnel_manager_has_been_appointed" model="hr.notification">
             <field name="template_name">responsible_personnel_manager_has_been_appointed</field>
             <field name="name">Призначено відповідального менеджера з персоналу</field>
@@ -154,15 +154,15 @@
                 $desired_department .
             </field>
         </record>
-        <record id="hr_notification_rotation_is_approval" model="hr.notification">
-            <field name="template_name">rotation_is_approval</field>
-            <field name="name">Погоджено ротацію</field>
-            <field name="notification">Запит на ротацію
-                $name погоджено керівником ротацію на вакансію:
-                $desired_job
-                $desired_department .
-            </field>
-        </record>
+<!--        <record id="hr_notification_rotation_is_approval" model="hr.notification">-->
+<!--            <field name="template_name">rotation_is_approval</field>-->
+<!--            <field name="name">Погоджено ротацію</field>-->
+<!--            <field name="notification">Запит на ротацію-->
+<!--                $name погоджено керівником ротацію на вакансію:-->
+<!--                $desired_job-->
+<!--                $desired_department .-->
+<!--            </field>-->
+<!--        </record>-->
         <record id="hr_notification_job_offer_is_signed" model="hr.notification">
             <field name="template_name">job_offer_is_signed</field>
             <field name="name">Закрито запит на підбір - підписана Пропозиція по роботі</field>

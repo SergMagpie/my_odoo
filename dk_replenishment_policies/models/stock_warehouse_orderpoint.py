@@ -60,6 +60,14 @@ class StockWarehouseOrderpoint(models.Model):
 
     def cron_replenishment_policies(self):
         self.env['stock.replenishment.policies'].search([]).compute_is_actual()
+        self.env["ir.logging"].sudo().create({
+            "name": 'Start cron_replenishment_policies',
+            "message": "",
+            "type": "server",
+            "path": "",
+            "line": "",
+            "func": ""
+        })
         orderpoints_to_compute = self.search([('is_buffer', '=', True)])
         for orderpoint in orderpoints_to_compute:
             orderpoint.stock_replenishment_policies_id = orderpoint.get_replenishment_policies()
@@ -81,17 +89,41 @@ class StockWarehouseOrderpoint(models.Model):
         orderpoints_for_increase_buffer = orderpoints_in_red_zone.filtered(
             lambda x: x.can_increase_buffer and x.stock_replenishment_policies_id.control_method == 'automatic'
         )
+        self.env["ir.logging"].sudo().create({
+            "name": 'Records to increase',
+            "message": orderpoints_for_increase_buffer,
+            "type": "server",
+            "path": "",
+            "line": "",
+            "func": ""
+        })
         for op in orderpoints_for_increase_buffer:
             op.increase_buffer_value()
 
         orderpoints_for_decrease_buffer = orderpoints_in_green_zone.filtered(
             lambda x: x.can_decrease_buffer and x.stock_replenishment_policies_id.control_method == 'automatic'
         )
+        self.env["ir.logging"].sudo().create({
+            "name": 'Records to decrease',
+            "message": orderpoints_for_decrease_buffer,
+            "type": "server",
+            "path": "",
+            "line": "",
+            "func": "",
+        })
         for op in orderpoints_for_decrease_buffer:
             op.decrease_buffer_value()
 
         orderpoints_without_zone = orderpoints_to_compute - orderpoints_in_red_zone - orderpoints_in_green_zone
         orderpoints_without_zone.policies_trigger_history_ids.unlink()
+        self.env["ir.logging"].sudo().create({
+            "name": 'END cron_replenishment_policies',
+            "message": "",
+            "type": "server",
+            "path": "",
+            "line": "",
+            "func": ""
+        })
         return True
 
     def update_history_replenishment_policies(self, zone):
@@ -128,7 +160,7 @@ class StockWarehouseOrderpoint(models.Model):
                         'response_time')  # .filtered(lambda x: isinstance(x, datetime))
                     if last_action_time:
                         last_action_time = max(last_action_time)
-                        difference_days_from_last_action = (datetime.now() - last_action_time).days
+                        difference_days_from_last_action = (datetime.now().date() - last_action_time.date()).days
                         waiting_time = rec.replenishment_time_days - difference_days_from_last_action
                     else:
                         waiting_time = -1

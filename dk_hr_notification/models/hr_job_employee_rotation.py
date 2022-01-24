@@ -66,25 +66,25 @@ class HrJobEmployeeRotation(models.Model):
         return result
 
 
-    def set_rejected(self):
-        if not self.rejection_reason:
-            raise UserError(_('You must determine the reason for the refusal'))
-        else:
-            super(HrJobEmployeeRotation, self).set_rejected()
-            recipients = [
-                self.request_initiator_id.work_email,
-                self.employee_id.work_email,
-                self.parent_id.work_email,
-                self.parent_id.parent_id.work_email,
-            ]
-            template_values = {
-                'name': self.employee_id.name or '',
-                'rejection_reason': self.rejection_reason,
-            }
-            self.send_notification_mail(
-                template_name='rotation_request_denied',
-                email_to=recipients,
-                template_values=template_values)
+    # def set_rejected(self):
+    #     if not self.rejection_reason:
+    #         raise UserError(_('You must determine the reason for the refusal'))
+    #     else:
+    #         super(HrJobEmployeeRotation, self).set_rejected()
+    #         recipients = [
+    #             self.request_initiator_id.work_email,
+    #             self.employee_id.work_email,
+    #             self.parent_id.work_email,
+    #             self.parent_id.parent_id.work_email,
+    #         ]
+    #         template_values = {
+    #             'name': self.employee_id.name or '',
+    #             'rejection_reason': self.rejection_reason,
+    #         }
+    #         self.send_notification_mail(
+    #             template_name='rotation_request_denied',
+    #             email_to=recipients,
+    #             template_values=template_values)
 
     def set_closed(self):
         if not self.reason_for_closing:
@@ -168,24 +168,24 @@ class HrJobEmployeeRotation(models.Model):
                     email_to=recipients,
                     template_values=template_values)
 
-    def set_approval(self):
-        rec = super(HrJobEmployeeRotation, self).set_approval()
-        recipients = [
-            self.request_initiator_id.work_email,
-            self.request_initiator_id.parent_id.work_email,
-            self.employee_id.work_email,
-            self.parent_id.work_email,
-            self.parent_id.parent_id.work_email,
-            self.desired_department_id.manager_id.work_email,
-        ]
-        template_values = {
-            'name': self.employee_id.name or '',
-            'desired_job': self.desired_job_id.name or '',
-            'desired_department': self.desired_department_id.name or '',
-        }
-        self.send_notification_mail(
-            template_name='rotation_is_approval',
-            email_to=recipients,
-            template_values=template_values)
-        return rec
+    # def set_approval(self):
+    #     rec = super(HrJobEmployeeRotation, self).set_approval()
+    #     recipients = [
+    #         self.request_initiator_id.work_email,
+    #         self.request_initiator_id.parent_id.work_email,
+    #         self.employee_id.work_email,
+    #         self.parent_id.work_email,
+    #         self.parent_id.parent_id.work_email,
+    #         self.desired_department_id.manager_id.work_email,
+    #     ]
+    #     template_values = {
+    #         'name': self.employee_id.name or '',
+    #         'desired_job': self.desired_job_id.name or '',
+    #         'desired_department': self.desired_department_id.name or '',
+    #     }
+    #     self.send_notification_mail(
+    #         template_name='rotation_is_approval',
+    #         email_to=recipients,
+    #         template_values=template_values)
+    #     return rec
 
