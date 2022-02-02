@@ -1,0 +1,36 @@
+version: '2'
+services:
+  odoo:
+    image: ykhlon/base_odoo_v11:pg_10
+    restart: unless-stopped
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      - PGHOST=db
+      - PGUSER=odoo
+      - PGPASSWORD=odoo
+    ports:
+      - "8104:8069"
+      - "8105:8071"
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./extra_addons:/opt/odoo/extra_addons
+      - ./odoo/odoo:/usr/lib/python3/dist-packages/odoo
+  db:
+    image: ykhlon/base_db_10
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5444:5432"
+volumes:
+  odoo-web-data:
+  odoo-db-data:
