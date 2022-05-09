@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="resignation_reason_settings_view_form" model="ir.ui.view">
+        <field name="name">resignation_reason_settings_view_form</field>
+        <field name="model">resignation.reason.settings</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="resignation_type"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="resignation_reason_settings_view_tree" model="ir.ui.view">
+        <field name="name">resignation_reason_settings_view_tree</field>
+        <field name="model">resignation.reason.settings</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="resignation_type"/>
+            </tree>
+        </field>
+    </record>
+    <record id="resignation_reason_settings_action" model="ir.actions.act_window">
+        <field name="name">Resignation reason settings</field>
+        <field name="res_model">resignation.reason.settings</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Resignation reason
+            </p>
+        </field>
+    </record>
+    <menuitem id="resignation_settings"
+              parent="hr_resignation.employee_resignation"
+              name="Resignation Settings"
+              sequence="10"/>
+    <menuitem id="resignation_reason_settings"
+              parent="resignation_settings"
+              name="Resignation Reason"
+              action="resignation_reason_settings_action"/>
+</odoo>
